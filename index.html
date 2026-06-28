@@ -1,83 +1,9 @@
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lista de Abordaje</title>
-<style>
-body{font-family:Arial,sans-serif;background:#f4f4f4;margin:0}
-header{background:#1976d2;color:#fff;padding:15px;text-align:center}
-.container{max-width:700px;margin:auto;padding:15px}
-input,button{padding:10px;font-size:16px;border-radius:8px;border:1px solid #ccc}
-button{background:#1976d2;color:#fff;border:none;cursor:pointer}
-.card{background:#fff;border-radius:10px;padding:12px;margin:8px 0;display:flex;justify-content:space-between;align-items:center}
-.done{text-decoration:line-through;opacity:.55;background:#d8ffd8}
-.small{font-size:13px;color:#555}
-.top{display:flex;gap:8px;flex-wrap:wrap}
-</style>
-</head>
-<body>
-<header><h2>Lista de Abordaje</h2></header>
-<div class="container">
-<div class="top">
-<input id="buscar" placeholder="Buscar por nombre o apellido" oninput="render()">
-<button onclick="agregar()">Añadir pasajero</button>
-</div>
-<h3 id="resumen"></h3>
-<div id="lista"></div>
-</div>
-<script>
-let pasajeros=[
-{name:"Jean-Marc Ferrer",tel:"+59176301200",lug:1,ok:false},
-{name:"Daysi Rea",tel:"+59178132098",lug:3,ok:false},
-{name:"Amanda Brito",tel:"+34654968097",lug:2,ok:false},
-{name:"ISABEL CLAROS ZENTENO",tel:"+59172294625",lug:1,ok:false},
-{name:"WINSOR RIVAS CLAROS",tel:"+59172294625",lug:1,ok:false},
-{name:"Isabelle Klauck",tel:"+59178239378",lug:1,ok:false},
-{name:"José Luis Rifarachi Arteaga",tel:"+59172102495",lug:2,ok:false},
-{name:"Camila Ribera",tel:"+59178156875",lug:2,ok:false},
-{name:"Noemi Mirely Saavedra",tel:"+59176938873",lug:2,ok:false},
-{name:"Alvaro Palazuelos",tel:"+59177504799",lug:1,ok:false},
-{name:"Damarit Peña Herea",tel:"+59175075223",lug:2,ok:false},
-{name:"Maria Rea",tel:"+59178132098",lug:1,ok:false},
-{name:"Liset Romero",tel:"+59177001182",lug:2,ok:false},
-{name:"Adriana Pérez",tel:"+59171048030",lug:2,ok:false},
-{name:"Samadi Hinojosa",tel:"+59176395607",lug:4,ok:false},
-{name:"Angeline Contreras",tel:"+59175036369",lug:2,ok:false},
-];
-function guardar(){localStorage.setItem("busLista",JSON.stringify(pasajeros));}
-const g=localStorage.getItem("busLista"); if(g) pasajeros=JSON.parse(g);
-
-function render(){
-const q=document.getElementById("buscar").value.toLowerCase();
-const d=document.getElementById("lista");
-d.innerHTML="";
-let arr=pasajeros.filter(p=>p.name.toLowerCase().includes(q)||p.tel.includes(q));
-let subidos=0,faltan=0,lugSub=0,lugTot=0;
-pasajeros.forEach(p=>{lugTot+=+p.lug;if(p.ok){subidos++;lugSub+=+p.lug}else faltan++;});
-document.getElementById("resumen").innerText=`Reservas: ${pasajeros.length} | Subieron: ${subidos} | Faltan: ${faltan} | Lugares: ${lugSub}/${lugTot}`;
-arr.forEach((p)=>{
-let c=document.createElement("div");
-c.className="card"+(p.ok?" done":"");
-c.innerHTML=`<div><b>${p.name}</b><div class='small'>${p.tel}<br>Lugares: ${p.lug}</div></div>`;
-let b=document.createElement("button");
-b.textContent=p.ok?"Desmarcar":"Subió";
-b.onclick=()=>{p.ok=!p.ok;guardar();render();};
-c.appendChild(b);
-d.appendChild(c);
-});
-}
-function agregar(){
-let n=prompt("Nombre");
-if(!n)return;
-let t=prompt("Teléfono")||"";
-let l=parseInt(prompt("Lugares","1"))||1;
-pasajeros.push({name:n,tel:t,lug:l,ok:false});
-guardar();
-render();
-}
-render();
-</script>
-</body>
-</html>
+<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><style>body{font-family:Arial;background:#f2f2f2}.c{max-width:700px;margin:auto}.card{display:flex;justify-content:space-between;background:#fff;padding:10px;margin:5px;border-radius:8px}.done{text-decoration:line-through;opacity:.6;background:#d9ffd9}</style></head><body><div class=c><h2>Lista Bus</h2><select id=dia onchange='chg()'><option value=sabado>Sábado</option><option value=domingo>Domingo</option></select><input id=q oninput='render()' placeholder='Buscar'><button onclick='add()'>Añadir</button><h3 id=r></h3><div id=l></div></div><script>
+const base={sabado:[{name:"Jean-Marc Ferrer",tel:"+59176301200",lug:1,ok:false},{name:"Daysi Rea",tel:"+59178132098",lug:3,ok:false},{name:"Amanda Brito",tel:"+34654968097",lug:2,ok:false},{name:"ISABEL CLAROS ZENTENO",tel:"+59172294625",lug:1,ok:false},{name:"WINSOR RIVAS CLAROS",tel:"+59172294625",lug:1,ok:false},{name:"Isabelle Klauck",tel:"+59178239378",lug:1,ok:false},{name:"José Luis Rifarachi Arteaga",tel:"+59172102495",lug:2,ok:false},{name:"Camila Ribera",tel:"+59178156875",lug:2,ok:false},{name:"Noemi Mirely Saavedra",tel:"+59176938873",lug:2,ok:false},{name:"Alvaro Palazuelos",tel:"+59177504799",lug:1,ok:false},{name:"Damarit Peña Herea",tel:"+59175075223",lug:2,ok:false},{name:"Maria Rea",tel:"+59178132098",lug:1,ok:false},{name:"Liset Romero",tel:"+59177001182",lug:2,ok:false},{name:"Adriana Pérez",tel:"+59171048030",lug:2,ok:false},{name:"Samadi Hinojosa",tel:"+59176395607",lug:4,ok:false},{name:"Angeline Contreras",tel:"+59175036369",lug:2,ok:false}],domingo:[{name:"LIZ KAREN MUZÑER MEJIA",tel:"+59169192371",lug:1,ok:false},{name:"Andrea Barba",tel:"+59176327692",lug:1,ok:false},{name:"Reserva sin nombre",tel:"",lug:2,ok:false},{name:"Franco Yujra Gutierrez",tel:"+59167759292",lug:2,ok:false},{name:"Sarahí Soliz Saucedo",tel:"+59160038620",lug:2,ok:false},{name:"Diego Junior Ulloa Vedia",tel:"+59174170695",lug:1,ok:false},{name:"Maria Fernanda Serrate",tel:"+59175552903",lug:1,ok:false},{name:"Maria Laura Jiménez Balcázar",tel:"+5915917555290",lug:1,ok:false},{name:"Fabiana Castaños",tel:"+59178448326",lug:1,ok:false},{name:"Jim Mckeon",tel:"+17329915763",lug:3,ok:false},{name:"Tatiana Fernandez Orellana",tel:"+59163480944",lug:1,ok:false},{name:"Daniel Artero",tel:"+59172701784",lug:2,ok:false},{name:"Gladys Jemio",tel:"+59168904589",lug:2,ok:false},{name:"Raquel Marquez",tel:"+59175221887",lug:1,ok:false},{name:"Maya Medina",tel:"+59169230181",lug:1,ok:false}]};
+let data=JSON.parse(localStorage.getItem('listas'))||base;let dia=localStorage.getItem('dia')||'sabado';document.getElementById('dia').value=dia;
+function save(){localStorage.setItem('listas',JSON.stringify(data));localStorage.setItem('dia',dia);}
+function chg(){dia=document.getElementById('dia').value;save();render();}
+function t(n){let p=data[dia].find(x=>x.name==n);p.ok=!p.ok;save();render();}
+function add(){let n=prompt('Nombre');if(!n)return;let te=prompt('Telefono')||'';let lu=parseInt(prompt('Lugares','1'))||1;data[dia].push({name:n,tel:te,lug:lu,ok:false});save();render();}
+function render(){let q=document.getElementById('q').value.toLowerCase(),a=data[dia],h='',s=0,f=0,ls=0,lt=0;a.forEach(p=>{lt+=p.lug;if(p.ok){s++;ls+=p.lug}else f++;});document.getElementById('r').innerText=dia+' | Reservas:'+a.length+' | Subieron:'+s+' | Faltan:'+f+' | Lugares:'+ls+'/'+lt;a.filter(p=>p.name.toLowerCase().includes(q)||p.tel.includes(q)).forEach(p=>h+=`<div class='card ${p.ok?'done':''}'><div><b>${p.name}</b><br>${p.tel}<br>Lugares:${p.lug}</div><button onclick="t('${p.name}')">${p.ok?'Desmarcar':'Subió'}</button></div>`);document.getElementById('l').innerHTML=h;}
+render();</script></body></html>
