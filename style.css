@@ -10,6 +10,24 @@ select,input{width:100%;padding:12px;border-radius:12px;background:#1d1d1d;color
 .card.ok{background:#1f4f2c}
 .nombre{font-size:14px;font-weight:700}
 .info{font-size:12px;color:#bbb;margin-top:3px}
-button.item{margin-top:10px;width:100%;padding:10px;background:#ff4d8d;color:#fff;border:none;border-radius:10px}
-.card.ok button.item{background:#2eaf52}
+.header-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.check{
+    background:#ff4d8d;
+    color:white;
+    border:none;
+    border-radius:18px;
+    padding:4px 10px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.card.ok .check{
+    background:#2eaf52;
+}
 #nuevo{position:fixed;right:18px;bottom:18px;width:58px;height:58px;border-radius:50%;border:none;background:#ff4d8d;color:#fff;font-size:28px}
