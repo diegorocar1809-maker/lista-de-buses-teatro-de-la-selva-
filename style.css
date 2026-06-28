@@ -1,6 +1,11 @@
 body{margin:0;font-family:Arial;background:#121212;color:#fff}
 header{background:#ff4d8d;padding:18px;display:flex;gap:15px;align-items:center}
-.logo{font-size:40px}
+.logo img{
+    width:60px;
+    height:60px;
+    object-fit:contain;
+    border-radius:50%;
+}
 .container{max-width:800px;margin:auto;padding:15px}
 select,input{width:100%;padding:12px;border-radius:12px;background:#1d1d1d;color:#fff;border:none;margin:10px 0}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
