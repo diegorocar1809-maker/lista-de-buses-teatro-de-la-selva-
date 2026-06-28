@@ -36,7 +36,31 @@ const datos={
 };
 const viaje=document.getElementById('viaje'),lista=document.getElementById('lista'),buscar=document.getElementById('buscar');
 Object.keys(datos).forEach(v=>viaje.add(new Option(v,v)));
-function draw(){let arr=[...datos[viaje.value]].sort((a,b)=>a.ok-b.ok);let h='',r=arr.length,l=0,a=0;arr.forEach((p,i)=>{l+=p.lug;if(p.ok)a++;});reservas.textContent=r;lugares.textContent=l;abordo.textContent=a;faltan.textContent=r-a;arr.filter(p=>p.name.toLowerCase().includes(buscar.value.toLowerCase())).forEach(p=>{let idx=datos[viaje.value].indexOf(p);h+=`<div class='card ${p.ok?'ok':''}'><div class='nombre'>${p.name}</div><div class='info'>📞 ${p.tel||'-'}</div><div class='info'>🪑 ${p.lug} lugar(es)</div><button class='item' onclick='t(${idx})'>${p.ok?'✅ Abordó':'⬜ Abordó'}</button></div>`});lista.innerHTML=h}
+function draw(){let arr=[...datos[viaje.value]].sort((a,b)=>a.ok-b.ok);let h='',r=arr.length,l=0,a=0;arr.forEach((p,i)=>{l+=p.lug;if(p.ok)a++;});reservas.textContent=r;lugares.textContent=l;abordo.textContent=a;faltan.textContent=r-a;arr.filter(p=>p.name.toLowerCase().includes(buscar.value.toLowerCase())).forEach(p=>{let idx=datos[viaje.value].indexOf(p);h+=`
+<div class="card ${p.ok ? 'ok' : ''}">
+
+    <div class="header-card">
+
+        <div class="nombre">
+            ${p.name}
+        </div>
+
+        <button class="check"
+            onclick="t(${idx})">
+
+            ${p.ok ? '✅' : '⬜'}
+
+        </button>
+
+    </div>
+
+    <div class="info">
+        📞 ${p.tel || '-'} &nbsp;&nbsp; • &nbsp;&nbsp;
+        🪑 ${p.lug} ${p.lug>1 ? 'lugares' : 'lugar'}
+    </div>
+
+</div>
+`;});lista.innerHTML=h}
 function t(i){datos[viaje.value][i].ok=!datos[viaje.value][i].ok;draw();}
 viaje.onchange=draw;buscar.oninput=draw;viaje.selectedIndex=0;draw();
 nuevo.onclick=()=>{let n=prompt('Nombre');if(!n)return;let tel=prompt('Teléfono')||'';let lug=parseInt(prompt('Lugares','1'))||1;datos[viaje.value].push({name:n,tel,lug,ok:false});draw();}
