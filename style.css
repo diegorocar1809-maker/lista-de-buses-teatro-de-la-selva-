@@ -15,7 +15,6 @@ select,input{width:100%;padding:12px;border-radius:12px;background:#1d1d1d;color
     justify-content:space-between;
     align-items:center;
 }
-
 .check{
     background:none;
     border:none;
