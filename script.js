@@ -1,5 +1,5 @@
-alert("SCRIPT NUEVO");
-const datos = {
+// ===== DATOS BASE (se usan solo la primera vez, luego manda localStorage) =====
+const datosBase = {
 'Sábado 25 - Las Mil y Una Noches':[
 {name:'Dirlan Jhojan García Aguilera',tel:'+59177652754',lug:4,ok:false},
 {name:'Mayerlin Cruz Balderrama',tel:'+59175660923',lug:1,ok:false},
@@ -49,33 +49,92 @@ const datos = {
 {name:'Jhovana Lurici',tel:'+59175096839',lug:2,ok:false}
 ]
 };
+
+// ===== CLAVE DE GUARDADO =====
+const STORAGE_KEY = 'buses_teatro_selva_datos';
+
+// ===== CARGAR DATOS: primero intenta localStorage, si no existe usa datosBase =====
+function cargarDatos(){
+    try{
+        const guardado = localStorage.getItem(STORAGE_KEY);
+        if(guardado){
+            return JSON.parse(guardado);
+        }
+    }catch(e){
+        console.error('Error leyendo localStorage:', e);
+    }
+    // Si no hay nada guardado, clonamos datosBase para no mutar el original
+    return JSON.parse(JSON.stringify(datosBase));
+}
+
+// ===== GUARDAR DATOS =====
+function guardarDatos(){
+    try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(datos));
+    }catch(e){
+        console.error('Error guardando en localStorage:', e);
+        alert('No se pudo guardar. Puede que el almacenamiento esté lleno o bloqueado.');
+    }
+}
+
+const datos = cargarDatos();
+
 const viaje=document.getElementById('viaje'),lista=document.getElementById('lista'),buscar=document.getElementById('buscar');
 Object.keys(datos).forEach(v=>viaje.add(new Option(v,v)));
-function draw(){let arr=[...datos[viaje.value]].sort((a,b)=>a.ok-b.ok);let h='',r=arr.length,l=0,a=0;arr.forEach((p,i)=>{l+=p.lug;if(p.ok)a++;});reservas.textContent=r;lugares.textContent=l;abordo.textContent=a;faltan.textContent=r-a;arr.filter(p=>p.name.toLowerCase().includes(buscar.value.toLowerCase())).forEach(p=>{let idx=datos[viaje.value].indexOf(p);h+=`
+
+function draw(){
+    let arr=[...datos[viaje.value]].sort((a,b)=>a.ok-b.ok);
+    let h='',r=arr.length,l=0,a=0;
+    arr.forEach((p)=>{l+=p.lug;if(p.ok)a++;});
+    reservas.textContent=r;lugares.textContent=l;abordo.textContent=a;faltan.textContent=r-a;
+    arr.filter(p=>p.name.toLowerCase().includes(buscar.value.toLowerCase())).forEach(p=>{
+        let idx=datos[viaje.value].indexOf(p);
+        h+=`
 <div class="card ${p.ok ? 'ok' : ''}">
-
     <div class="header-card">
-
         <div class="nombre">
             ${p.name}
         </div>
-
-        <button class="check"
-            onclick="t(${idx})">
-
+        <button class="check" onclick="t(${idx})">
             ${p.ok ? '✅' : '⬜'}
-
         </button>
-
     </div>
-
     <div class="info">
         📞 ${p.tel || '-'} &nbsp;&nbsp; • &nbsp;&nbsp;
         🪑 ${p.lug} ${p.lug>1 ? 'lugares' : 'lugar'}
     </div>
-
 </div>
-`;});lista.innerHTML=h}
-function t(i){datos[viaje.value][i].ok=!datos[viaje.value][i].ok;draw();}
-viaje.onchange=draw;buscar.oninput=draw;viaje.selectedIndex=0;draw();
-nuevo.onclick=()=>{let n=prompt('Nombre');if(!n)return;let tel=prompt('Teléfono')||'';let lug=parseInt(prompt('Lugares','1'))||1;datos[viaje.value].push({name:n,tel,lug,ok:false});draw();}
+`;
+    });
+    lista.innerHTML=h;
+}
+
+function t(i){
+    datos[viaje.value][i].ok=!datos[viaje.value][i].ok;
+    guardarDatos();
+    draw();
+}
+
+viaje.onchange=draw;
+buscar.oninput=draw;
+viaje.selectedIndex=0;
+draw();
+
+nuevo.onclick=()=>{
+    let n=prompt('Nombre');
+    if(!n)return;
+    let tel=prompt('Teléfono')||'';
+    let lug=parseInt(prompt('Lugares','1'))||1;
+    datos[viaje.value].push({name:n,tel,lug,ok:false});
+    guardarDatos();
+    draw();
+}
+
+// Botón opcional para resetear todo a los datos originales (por si algún día lo necesitas
+// desde la consola del navegador: escribe resetearDatos() y Enter)
+window.resetearDatos = function(){
+    if(confirm('¿Seguro que quieres borrar todo lo guardado y volver a los datos originales?')){
+        localStorage.removeItem(STORAGE_KEY);
+        location.reload();
+    }
+}
