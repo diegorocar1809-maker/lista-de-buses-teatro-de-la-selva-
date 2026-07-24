@@ -1,3 +1,4 @@
+alert("SCRIPT NUEVO");
 const datos = {
 'Sábado 25 - Las Mil y Una Noches':[
 {name:'Dirlan Jhojan García Aguilera',tel:'+59177652754',lug:4,ok:false},
