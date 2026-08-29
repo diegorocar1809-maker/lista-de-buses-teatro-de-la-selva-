@@ -60,10 +60,7 @@ pasajeros: conId('sab', [
 {name:'Kleydii Barriga',tel:'+59170247305',lug:2,ok:false,bus:null},
 {name:'Teresa Rayssa Castro Novaes',tel:'+59179748130',lug:2,ok:false,bus:null},
 {name:'Verónica Vélez García',tel:'+59172614279',lug:3,ok:false,bus:null},
-{name:'Marcela Revilla',tel:'+59176276677',lug:2,ok:false,bus:null},
-{name:'Amet Del Rio',tel:'+59175338937',lug:1,ok:false,bus:null},
-{name:'Daniel Arana',tel:'+59175232660',lug:6,ok:false,bus:null},
-{name:'Ramiro Vargas',tel:'+59173791638',lug:2,ok:false,bus:null}
+{name:'Marcela Revilla',tel:'+59176276677',lug:2,ok:false,bus:null}
 ])
 },
 
@@ -99,6 +96,18 @@ pasajeros: conId('dom', [
 {name:'Maria Eugenia Gonzales',tel:'+59168927062',lug:3,ok:false,bus:null}
 ])
 }
+};
+
+// ===== ICONOS (SVG en línea, en vez de emojis, para que se vean igual en todos los celulares) =====
+const ICONS = {
+    phone:`<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4c0 9 7 16 16 16 0-2 0-4-1-5-1-1-3-1-4 0l-1 1c-2-1-4-3-5-5l1-1c1-1 1-3 0-4-1-1-3-1-5-1z"/></svg>`,
+    seat:`<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-4 3-6 7-6s7 2 7 6"/></svg>`,
+    bus:`<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="10" rx="2"/><line x1="3" y1="11" x2="21" y2="11"/><circle cx="7.5" cy="18" r="1.6"/><circle cx="16.5" cy="18" r="1.6"/></svg>`,
+    trash:`<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/></svg>`,
+    pencil:`<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 10-10-3-3L5 16l-1 4z"/></svg>`,
+    checkOn:`<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>`,
+    checkOff:`<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/></svg>`,
+    search:`<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>`
 };
 
 // ===== CLAVES DE GUARDADO =====
@@ -234,8 +243,8 @@ function draw(){
     <div class="bus-nombre">${b.nombre}</div>
     <div class="bus-ocupacion">${ocupado}/${b.capacidad}</div>
     <div class="bus-actions">
-        <button onclick="event.stopPropagation();editarCapacidadBus(${i})" title="Editar capacidad">✏️</button>
-        <button onclick="event.stopPropagation();toggleLleno(${i})" title="Marcar lleno/libre">${b.lleno?'🔴 Lleno':'🟢 Libre'}</button>
+        <button onclick="event.stopPropagation();editarCapacidadBus(${i})" title="Editar capacidad">${ICONS.pencil}</button>
+        <button onclick="event.stopPropagation();toggleLleno(${i})" title="Marcar lleno/libre"><span class="pill-estado ${b.lleno?'lleno':'libre'}">${b.lleno?'Lleno':'Libre'}</span></button>
     </div>
 </div>`;
     });
@@ -261,37 +270,46 @@ function draw(){
     if(filtroBus==='sinbus') visibles = visibles.filter(p=>p.bus===null || p.bus===undefined);
     else if(filtroBus!==null) visibles = visibles.filter(p=>p.bus===filtroBus);
 
-    // ===== Dibujar tarjetas de pasajeros =====
-    visibles.forEach(p=>{
-        let idx=pasajeros.indexOf(p);
-        let opciones = buses.map((b,i)=>`<option value="${i}" ${p.bus===i?'selected':''}>${b.nombre}${b.lleno?' (lleno)':''}</option>`).join('');
-        let telHtml = p.tel ? `<a class="tel-link" href="tel:${p.tel}">📞 ${p.tel}</a>` : '📞 -';
-        h+=`
+    // ===== Dibujar tarjetas de pasajeros (o el estado vacío si no hay nada que mostrar) =====
+    if(visibles.length===0){
+        h=`
+<div class="estado-vacio">
+    ${ICONS.search}
+    <p>No se encontraron pasajeros con este criterio.</p>
+</div>`;
+    }else{
+        visibles.forEach(p=>{
+            let idx=pasajeros.indexOf(p);
+            let opciones = buses.map((b,i)=>`<option value="${i}" ${p.bus===i?'selected':''}>${b.nombre}${b.lleno?' (lleno)':''}</option>`).join('');
+            let telHtml = p.tel ? `<a class="tel-link" href="tel:${p.tel}">${ICONS.phone}${p.tel}</a>` : `<span class="dato">${ICONS.phone}-</span>`;
+            h+=`
 <div class="card ${p.ok ? 'ok' : ''}">
     <div class="header-card">
         <div class="nombre">
             ${p.name}
         </div>
         <div class="card-actions">
-            <button class="borrar" onclick="eliminarPasajero(${idx})" title="Eliminar pasajero">🗑️</button>
-            <button class="check" onclick="t(${idx})">
-                ${p.ok ? '✅' : '⬜'}
+            <button class="borrar" onclick="eliminarPasajero(${idx})" title="Eliminar pasajero">${ICONS.trash}</button>
+            <button class="check" onclick="t(${idx})" title="${p.ok ? 'Marcar como no abordado' : 'Marcar como abordado'}">
+                ${p.ok ? ICONS.checkOn : ICONS.checkOff}
             </button>
         </div>
     </div>
     <div class="info">
-        ${telHtml} &nbsp;&nbsp; • &nbsp;&nbsp;
-        🪑 ${p.lug} ${p.lug>1 ? 'lugares' : 'lugar'}
+        ${telHtml}
+        <span class="dato">${ICONS.seat}${p.lug} ${p.lug>1 ? 'lugares' : 'lugar'}</span>
     </div>
     <div class="bus-row">
-        🚌 <select class="bus-select" onchange="asignarBus(${idx}, this.value)">
+        ${ICONS.bus}
+        <select class="bus-select" onchange="asignarBus(${idx}, this.value)">
             <option value="">Sin bus</option>
             ${opciones}
         </select>
     </div>
 </div>
 `;
-    });
+        });
+    }
     lista.innerHTML=h;
 }
 
