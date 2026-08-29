@@ -1,127 +1,335 @@
-body{margin:0;font-family:Arial;background:#121212;color:#fff}
-header{background:#ff4d8d;padding:18px;display:flex;gap:15px;align-items:center}
+/* ================= TOKENS ================= */
+:root{
+    /* Fondo — gris oscuro cálido, no negro puro */
+    --bg:#17171a;
+    --bg-elevated:#221f23;
+    --bg-elevated-2:#2b282c;
+    --border-subtle:rgba(255,255,255,.07);
+
+    /* Texto */
+    --text-primary:#f5f5f7;
+    --text-secondary:#a1a1a6;
+    --text-tertiary:#6e6e73;
+
+    /* Acento de marca */
+    --accent:#ff4d8d;
+    --accent-dark:#d43e73;
+    --accent-soft:rgba(255,77,141,.14);
+
+    /* Estados */
+    --success:#30d158;
+    --success-bg:#17301f;
+    --danger:#ff453a;
+
+    /* Radios */
+    --r-sm:10px;
+    --r-md:14px;
+    --r-lg:20px;
+
+    /* Espaciado */
+    --sp-1:4px;
+    --sp-2:8px;
+    --sp-3:12px;
+    --sp-4:16px;
+    --sp-5:24px;
+    --sp-6:32px;
+
+    /* Sombras */
+    --shadow-card:0 1px 2px rgba(0,0,0,.35), 0 10px 24px -14px rgba(0,0,0,.55);
+    --shadow-elevated:0 12px 32px -8px rgba(0,0,0,.6);
+
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:var(--font);
+    background:var(--bg);
+    color:var(--text-primary);
+    -webkit-font-smoothing:antialiased;
+}
+
+/* ================= HEADER ================= */
+header{
+    background:linear-gradient(180deg,var(--bg-elevated),var(--bg));
+    border-bottom:1px solid var(--border-subtle);
+    padding:var(--sp-4) var(--sp-5);
+    display:flex;
+    gap:var(--sp-4);
+    align-items:center;
+}
 .logo img{
-    width:60px;
-    height:60px;
+    width:48px;
+    height:48px;
     object-fit:contain;
     border-radius:50%;
+    background:var(--accent-soft);
+    padding:4px;
 }
-.container{max-width:800px;margin:auto;padding:15px}
-select,input{width:100%;padding:12px;border-radius:12px;background:#1d1d1d;color:#fff;border:none;margin:10px 0}
-/* ===== Fila de buses (incluye chip "Sin bus") — compacta ===== */
-.buses-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(64px,1fr));gap:6px;margin:0 0 14px}
-.bus-chip{background:#1d1d1d;border-radius:10px;padding:6px 4px;text-align:center;border:1px solid transparent;cursor:pointer;transition:box-shadow .15s}
-.bus-chip.lleno{background:#3a1414;border-color:#ff4d4d}
-.bus-chip.sobre .bus-ocupacion{color:#ff4d4d;font-weight:bold}
-.bus-chip.activo{box-shadow:0 0 0 2px #ff4d8d inset}
-.bus-nombre{color:#ff4d8d;font-weight:bold;font-size:10px}
-.bus-ocupacion{font-size:11px;color:#ddd;margin:2px 0}
-.bus-actions{display:flex;flex-direction:row;justify-content:center;gap:3px}
+header h1{
+    margin:0;
+    font-size:19px;
+    font-weight:700;
+    letter-spacing:-.01em;
+    color:var(--text-primary);
+}
+header p{
+    margin:2px 0 0;
+    font-size:12.5px;
+    color:var(--accent);
+    font-weight:600;
+    letter-spacing:.02em;
+}
+
+/* ================= LAYOUT ================= */
+.container{max-width:720px;margin:auto;padding:var(--sp-5) var(--sp-4) 100px}
+
+label{
+    display:block;
+    font-size:12px;
+    font-weight:600;
+    color:var(--text-secondary);
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    margin-bottom:var(--sp-2);
+}
+
+select,input{
+    width:100%;
+    padding:13px var(--sp-4);
+    border-radius:var(--r-md);
+    background:var(--bg-elevated);
+    color:var(--text-primary);
+    border:1px solid var(--border-subtle);
+    margin:0 0 var(--sp-4);
+    font-size:15px;
+    font-family:var(--font);
+}
+select:focus,input:focus{
+    outline:none;
+    border-color:var(--accent);
+}
+input::placeholder{color:var(--text-tertiary)}
+
+/* ================= ESTADÍSTICAS ================= */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-2);margin-bottom:var(--sp-4)}
+.stats div{
+    background:var(--bg-elevated);
+    border:1px solid var(--border-subtle);
+    padding:var(--sp-3) var(--sp-2);
+    border-radius:var(--r-md);
+    text-align:center;
+}
+.stats span{display:block;color:var(--text-primary);font-size:22px;font-weight:700;letter-spacing:-.02em}
+.stats small{color:var(--text-secondary);font-size:11px;font-weight:500}
+
+/* ================= PROGRESO ================= */
+.progreso{margin:0 0 var(--sp-5)}
+.progreso-track{background:var(--bg-elevated-2);border-radius:999px;height:10px;overflow:hidden}
+.progreso-fill{
+    background:linear-gradient(90deg,var(--accent-dark),var(--accent));
+    height:100%;
+    border-radius:999px;
+    transition:width .25s ease;
+}
+.progreso-texto{font-size:12.5px;color:var(--text-secondary);margin-top:var(--sp-2);text-align:center}
+
+/* ================= BUSES (compacto) ================= */
+.buses-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(68px,1fr));gap:var(--sp-2);margin-bottom:var(--sp-3)}
+.bus-chip{
+    background:var(--bg-elevated);
+    border:1px solid var(--border-subtle);
+    border-radius:var(--r-sm);
+    padding:var(--sp-2) 4px;
+    text-align:center;
+    cursor:pointer;
+    transition:border-color .15s, background .15s;
+}
+.bus-chip:active{transform:scale(.97)}
+.bus-chip.lleno{background:rgba(255,69,58,.1);border-color:rgba(255,69,58,.4)}
+.bus-chip.sobre .bus-ocupacion{color:var(--danger);font-weight:700}
+.bus-chip.activo{border-color:var(--accent);background:var(--accent-soft)}
+.bus-nombre{color:var(--text-secondary);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.03em}
+.bus-ocupacion{font-size:12px;color:var(--text-primary);font-weight:600;margin:3px 0 5px}
+.bus-actions{display:flex;justify-content:center;gap:4px}
 .bus-actions button{
     background:none;
-    border:1px solid #444;
-    border-radius:6px;
-    color:#fff;
-    font-size:9px;
-    padding:2px 3px;
+    border:1px solid var(--border-subtle);
+    border-radius:7px;
+    color:var(--text-secondary);
+    padding:3px 5px;
     cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
-.bus-chip.lleno .bus-actions button{border-color:#ff6b6b}
-.sinbus-chip .bus-nombre{color:#ccc}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
-.stats div{background:#1d1d1d;padding:10px;border-radius:12px;text-align:center}
-.stats span{display:block;color:#ff4d8d;font-size:22px;font-weight:bold}
+.bus-actions button:hover{color:var(--text-primary);border-color:var(--text-secondary)}
+.bus-actions .icon{width:11px;height:11px}
+.pill-estado{font-size:9px;font-weight:700;padding:3px 6px;border-radius:6px}
+.pill-estado.libre{background:rgba(48,209,88,.12);color:var(--success)}
+.pill-estado.lleno{background:rgba(255,69,58,.15);color:var(--danger)}
+.sinbus-chip .bus-nombre{color:var(--text-tertiary)}
 
-/* ===== Barra de progreso de abordaje ===== */
-.progreso{margin:4px 0 14px}
-.progreso-track{background:#1d1d1d;border-radius:10px;height:14px;overflow:hidden}
-.progreso-fill{background:#ff4d8d;height:100%;border-radius:10px;transition:width .2s}
-.progreso-texto{font-size:12px;color:#bbb;margin-top:6px;text-align:center}
-
-/* ===== Aviso de filtro activo por bus ===== */
-.filtro-info{background:#1d1d1d;padding:8px 12px;border-radius:10px;font-size:13px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.filtro-info button{background:none;border:none;color:#ff4d8d;cursor:pointer;font-size:13px;font-weight:bold}
-
-.card{background:#1d1d1d;padding:14px;border-radius:14px;margin:10px 0}
-.card.ok{background:#1f4f2c}
-.nombre{font-size:14px;font-weight:700}
-.info{font-size:12px;color:#bbb;margin-top:3px}
-.header-card{
+/* ================= AVISO DE FILTRO ================= */
+.filtro-info{
+    background:var(--accent-soft);
+    color:var(--accent);
+    padding:var(--sp-2) var(--sp-3);
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
     display:flex;
     justify-content:space-between;
     align-items:center;
+    margin-bottom:var(--sp-3);
 }
-.card-actions{display:flex;align-items:center;gap:10px}
+.filtro-info button{background:none;border:none;color:var(--accent);cursor:pointer;font-size:12px;font-weight:700}
+
+/* ================= TARJETA DE PASAJERO ================= */
+.card{
+    background:var(--bg-elevated);
+    border:1px solid var(--border-subtle);
+    box-shadow:var(--shadow-card);
+    padding:var(--sp-4);
+    border-radius:var(--r-lg);
+    margin-bottom:var(--sp-3);
+    animation:fadeIn .2s ease;
+}
+.card.ok{
+    background:var(--success-bg);
+    border-color:rgba(48,209,88,.25);
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+@media (prefers-reduced-motion:reduce){.card{animation:none}}
+
+.header-card{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--sp-3)}
+.nombre{font-size:15.5px;font-weight:600;line-height:1.3;color:var(--text-primary)}
+
+.card-actions{display:flex;align-items:center;gap:var(--sp-4);flex-shrink:0}
 .borrar{
     background:none;
     border:none;
-    color:#999;
-    font-size:16px;
+    color:var(--text-tertiary);
     cursor:pointer;
-    padding:0;
+    padding:4px;
     line-height:1;
+    display:flex;
 }
-.borrar:hover{color:#ff4d4d}
+.borrar:hover{color:var(--danger)}
+.borrar .icon{width:17px;height:17px}
+
 .check{
     background:none;
     border:none;
-    color:#ff4d8d;
-    font-size:22px;
+    color:var(--text-tertiary);
     cursor:pointer;
     padding:0;
-    margin:0;
     line-height:1;
+    display:flex;
+    transition:color .15s, transform .15s;
 }
-.card.ok .check{
-    color:#2eaf52;
-}
-.tel-link{color:#8ec9ff;text-decoration:none}
-.tel-link:hover{text-decoration:underline}
+.check .icon{width:30px;height:30px}
+.check:active{transform:scale(.9)}
+.card.ok .check{color:var(--success)}
 
-/* ===== Selector de bus dentro de cada tarjeta ===== */
-.bus-row{margin-top:8px;display:flex;align-items:center;gap:6px;font-size:12px}
+.info{
+    font-size:12.5px;
+    color:var(--text-secondary);
+    margin-top:var(--sp-2);
+    display:flex;
+    align-items:center;
+    gap:var(--sp-3);
+    flex-wrap:wrap;
+}
+.info .dato{display:flex;align-items:center;gap:5px}
+.info .icon{width:14px;height:14px;color:var(--text-tertiary);flex-shrink:0}
+.tel-link{color:var(--text-secondary);text-decoration:none;display:flex;align-items:center;gap:5px}
+.tel-link:hover{color:var(--accent)}
+.tel-link .icon{color:var(--accent)}
+
+.bus-row{margin-top:var(--sp-3);display:flex;align-items:center;gap:var(--sp-2)}
+.bus-row .icon{width:15px;height:15px;color:var(--text-tertiary);flex-shrink:0}
 .bus-row .bus-select{
     width:auto;
     flex:1;
-    padding:6px 8px;
-    border-radius:8px;
-    background:#111;
-    color:#fff;
-    border:1px solid #333;
+    padding:8px var(--sp-3);
+    border-radius:var(--r-sm);
+    background:var(--bg-elevated-2);
+    color:var(--text-primary);
+    border:1px solid var(--border-subtle);
     margin:0;
-    font-size:12px;
+    font-size:12.5px;
 }
-#nuevo{position:fixed;right:18px;bottom:18px;width:58px;height:58px;border-radius:50%;border:none;background:#ff4d8d;color:#fff;font-size:28px;cursor:pointer}
 
-/* ===== Modal nuevo pasajero ===== */
+/* ================= ESTADO VACÍO ================= */
+.estado-vacio{
+    text-align:center;
+    padding:var(--sp-6) var(--sp-4);
+    color:var(--text-tertiary);
+}
+.estado-vacio .icon{width:32px;height:32px;margin-bottom:var(--sp-3);opacity:.6}
+.estado-vacio p{margin:0;font-size:14px;color:var(--text-secondary)}
+
+/* ================= BOTÓN FLOTANTE ================= */
+#nuevo{
+    position:fixed;
+    right:20px;
+    bottom:24px;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    border:none;
+    background:var(--accent);
+    color:#fff;
+    font-size:28px;
+    cursor:pointer;
+    box-shadow:var(--shadow-elevated);
+    transition:transform .12s, background .15s;
+}
+#nuevo:hover{background:var(--accent-dark)}
+#nuevo:active{transform:scale(.92)}
+
+/* ================= MODAL NUEVO PASAJERO ================= */
 .oculto{display:none !important}
 .modal-overlay{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.6);
+    background:rgba(0,0,0,.55);
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:20px;
+    padding:var(--sp-4);
     z-index:50;
 }
 .modal-box{
-    background:#1d1d1d;
-    border-radius:16px;
-    padding:20px;
+    background:var(--bg-elevated);
+    border:1px solid var(--border-subtle);
+    box-shadow:var(--shadow-elevated);
+    border-radius:var(--r-lg);
+    padding:var(--sp-5);
     width:100%;
     max-width:320px;
 }
-.modal-box h3{margin:0 0 10px}
-.modal-box label{font-size:12px;color:#bbb;display:block;margin-top:8px}
-.modal-actions{display:flex;gap:10px;margin-top:14px}
+.modal-box h3{margin:0 0 var(--sp-2);font-size:17px;font-weight:700}
+.modal-box label{margin-top:var(--sp-3)}
+.modal-box input{margin-bottom:0}
+.modal-actions{display:flex;gap:var(--sp-3);margin-top:var(--sp-5)}
 .btn-primario,.btn-secundario{
     flex:1;
     padding:12px;
-    border-radius:10px;
+    border-radius:var(--r-sm);
     border:none;
-    font-weight:bold;
+    font-weight:600;
+    font-size:14px;
+    font-family:var(--font);
     cursor:pointer;
+    transition:transform .1s, background .15s;
 }
-.btn-primario{background:#ff4d8d;color:#fff}
-.btn-secundario{background:#333;color:#fff}
+.btn-primario{background:var(--accent);color:#fff}
+.btn-primario:hover{background:var(--accent-dark)}
+.btn-secundario{background:var(--bg-elevated-2);color:var(--text-primary)}
+.btn-primario:active,.btn-secundario:active{transform:scale(.96)}
