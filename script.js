@@ -299,7 +299,3 @@ window.resetearDatos = function(){
         location.reload();
     }
 }
-}
-        location.reload();
-    }
-}
