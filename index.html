@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Buses Teatro de la Selva</title>
-<link rel="stylesheet" href="style.css?v=2">
+<link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
 <header>
@@ -16,9 +16,7 @@
 <div class="container">
 <label>Viaje</label>
 <select id="viaje"></select>
-
 <div id="buses" class="buses-row"></div>
-
 <input id="buscar" placeholder="🔍 Buscar pasajero...">
 <div class="stats">
 <div><span id="reservas">0</span><small>Reservas</small></div>
@@ -26,12 +24,29 @@
 <div><span id="abordo">0</span><small>Abordó</small></div>
 <div><span id="faltan">0</span><small>Faltan</small></div>
 </div>
+<div id="progreso" class="progreso"></div>
+<div id="filtroInfo" class="filtro-info oculto"></div>
 <div id="lista"></div>
 <button id="nuevo">＋</button>
 </div>
-<script src="script.js?v=2"></script>
-</body>
-</html>
 
+<!-- Modal para agregar pasajero rápido -->
+<div id="modalNuevo" class="modal-overlay oculto">
+  <div class="modal-box">
+    <h3>Nuevo pasajero</h3>
+    <label>Nombre</label>
+    <input id="inputNombre" placeholder="Nombre completo">
+    <label>Teléfono</label>
+    <input id="inputTelefono" placeholder="+591...">
+    <label>Lugares</label>
+    <input id="inputLugares" type="number" min="1" value="1">
+    <div class="modal-actions">
+      <button id="cancelarNuevo" class="btn-secundario">Cancelar</button>
+      <button id="guardarNuevo" class="btn-primario">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js?v=3"></script>
 </body>
 </html>
