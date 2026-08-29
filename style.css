@@ -8,12 +8,12 @@ header{background:#ff4d8d;padding:18px;display:flex;gap:15px;align-items:center}
 }
 .container{max-width:800px;margin:auto;padding:15px}
 select,input{width:100%;padding:12px;border-radius:12px;background:#1d1d1d;color:#fff;border:none;margin:10px 0}
-
-/* ===== Fila de los 3 buses ===== */
-.buses-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 0 12px}
-.bus-chip{background:#1d1d1d;border-radius:12px;padding:10px 6px;text-align:center;border:1px solid transparent}
+/* ===== Fila de buses (incluye chip "Sin bus") ===== */
+.buses-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(75px,1fr));gap:8px;margin:4px 0 12px}
+.bus-chip{background:#1d1d1d;border-radius:12px;padding:10px 6px;text-align:center;border:1px solid transparent;cursor:pointer;transition:box-shadow .15s}
 .bus-chip.lleno{background:#3a1414;border-color:#ff4d4d}
 .bus-chip.sobre .bus-ocupacion{color:#ff4d4d;font-weight:bold}
+.bus-chip.activo{box-shadow:0 0 0 2px #ff4d8d inset}
 .bus-nombre{color:#ff4d8d;font-weight:bold;font-size:13px}
 .bus-ocupacion{font-size:13px;color:#ddd;margin:4px 0}
 .bus-actions{display:flex;flex-direction:column;gap:4px}
@@ -27,10 +27,21 @@ select,input{width:100%;padding:12px;border-radius:12px;background:#1d1d1d;color
     cursor:pointer;
 }
 .bus-chip.lleno .bus-actions button{border-color:#ff6b6b}
-
+.sinbus-chip .bus-nombre{color:#ccc}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
 .stats div{background:#1d1d1d;padding:10px;border-radius:12px;text-align:center}
 .stats span{display:block;color:#ff4d8d;font-size:22px;font-weight:bold}
+
+/* ===== Barra de progreso de abordaje ===== */
+.progreso{margin:4px 0 14px}
+.progreso-track{background:#1d1d1d;border-radius:10px;height:14px;overflow:hidden}
+.progreso-fill{background:#ff4d8d;height:100%;border-radius:10px;transition:width .2s}
+.progreso-texto{font-size:12px;color:#bbb;margin-top:6px;text-align:center}
+
+/* ===== Aviso de filtro activo por bus ===== */
+.filtro-info{background:#1d1d1d;padding:8px 12px;border-radius:10px;font-size:13px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.filtro-info button{background:none;border:none;color:#ff4d8d;cursor:pointer;font-size:13px;font-weight:bold}
+
 .card{background:#1d1d1d;padding:14px;border-radius:14px;margin:10px 0}
 .card.ok{background:#1f4f2c}
 .nombre{font-size:14px;font-weight:700}
@@ -40,6 +51,17 @@ select,input{width:100%;padding:12px;border-radius:12px;background:#1d1d1d;color
     justify-content:space-between;
     align-items:center;
 }
+.card-actions{display:flex;align-items:center;gap:10px}
+.borrar{
+    background:none;
+    border:none;
+    color:#999;
+    font-size:16px;
+    cursor:pointer;
+    padding:0;
+    line-height:1;
+}
+.borrar:hover{color:#ff4d4d}
 .check{
     background:none;
     border:none;
@@ -53,6 +75,8 @@ select,input{width:100%;padding:12px;border-radius:12px;background:#1d1d1d;color
 .card.ok .check{
     color:#2eaf52;
 }
+.tel-link{color:#8ec9ff;text-decoration:none}
+.tel-link:hover{text-decoration:underline}
 
 /* ===== Selector de bus dentro de cada tarjeta ===== */
 .bus-row{margin-top:8px;display:flex;align-items:center;gap:6px;font-size:12px}
@@ -67,5 +91,37 @@ select,input{width:100%;padding:12px;border-radius:12px;background:#1d1d1d;color
     margin:0;
     font-size:12px;
 }
+#nuevo{position:fixed;right:18px;bottom:18px;width:58px;height:58px;border-radius:50%;border:none;background:#ff4d8d;color:#fff;font-size:28px;cursor:pointer}
 
-#nuevo{position:fixed;right:18px;bottom:18px;width:58px;height:58px;border-radius:50%;border:none;background:#ff4d8d;color:#fff;font-size:28px}
+/* ===== Modal nuevo pasajero ===== */
+.oculto{display:none !important}
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:50;
+}
+.modal-box{
+    background:#1d1d1d;
+    border-radius:16px;
+    padding:20px;
+    width:100%;
+    max-width:320px;
+}
+.modal-box h3{margin:0 0 10px}
+.modal-box label{font-size:12px;color:#bbb;display:block;margin-top:8px}
+.modal-actions{display:flex;gap:10px;margin-top:14px}
+.btn-primario,.btn-secundario{
+    flex:1;
+    padding:12px;
+    border-radius:10px;
+    border:none;
+    font-weight:bold;
+    cursor:pointer;
+}
+.btn-primario{background:#ff4d8d;color:#fff}
+.btn-secundario{background:#333;color:#fff}
