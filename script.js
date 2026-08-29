@@ -60,7 +60,10 @@ pasajeros: conId('sab', [
 {name:'Kleydii Barriga',tel:'+59170247305',lug:2,ok:false,bus:null},
 {name:'Teresa Rayssa Castro Novaes',tel:'+59179748130',lug:2,ok:false,bus:null},
 {name:'Verónica Vélez García',tel:'+59172614279',lug:3,ok:false,bus:null},
-{name:'Marcela Revilla',tel:'+59176276677',lug:2,ok:false,bus:null}
+{name:'Marcela Revilla',tel:'+59176276677',lug:2,ok:false,bus:null},
+{name:'Amet Del Rio',tel:'+59175338937',lug:1,ok:false,bus:null},
+{name:'Daniel Arana',tel:'+59175232660',lug:6,ok:false,bus:null},
+{name:'Ramiro Vargas',tel:'+59173791638',lug:2,ok:false,bus:null}
 ])
 },
 
