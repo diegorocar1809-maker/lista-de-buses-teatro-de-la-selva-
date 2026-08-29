@@ -2,7 +2,11 @@
 // Cada vez que se actualicen las listas de pasajeros en datosBase, hay que subir este número.
 // Así, todos los dispositivos (celulares, iPad, etc.) reciben la lista nueva automáticamente,
 // sin perder el estado de "abordó" ni el bus asignado de los pasajeros que ya estaban marcados.
-const DATA_VERSION = 2;
+//
+// v3: cada pasajero ahora tiene un "id" único (arreglado el problema de nombres duplicados
+// que podían confundirse al fusionar listas), y los pasajeros agregados a mano con el botón "+"
+// ya NO se pierden cuando se sube esta versión.
+const DATA_VERSION = 3;
 
 // ===== DATOS BASE (fuente de la verdad para las listas de pasajeros) =====
 function busesDefault(){
@@ -13,10 +17,17 @@ function busesDefault(){
     ];
 }
 
+// Le pone un id único y estable a cada pasajero según su posición en la lista.
+// IMPORTANTE: si agregas pasajeros nuevos a estas listas, agrégalos siempre AL FINAL
+// de cada arreglo (no los insertes en medio), así los ids de los demás no cambian.
+function conId(prefijo, arr){
+    return arr.map((p,i)=>({...p, id:`${prefijo}-${i+1}`}));
+}
+
 const datosBase = {
 'Sábado 29 de Agosto':{
 buses:busesDefault(),
-pasajeros:[
+pasajeros: conId('sab', [
 {name:'Diana Rojas',tel:'+59177884643',lug:3,ok:false,bus:null},
 {name:'Diana Rojas',tel:'+59177884643',lug:3,ok:false,bus:null},
 {name:'Alejandro Bluske',tel:'+59179257957',lug:2,ok:false,bus:null},
@@ -50,12 +61,12 @@ pasajeros:[
 {name:'Teresa Rayssa Castro Novaes',tel:'+59179748130',lug:2,ok:false,bus:null},
 {name:'Verónica Vélez García',tel:'+59172614279',lug:3,ok:false,bus:null},
 {name:'Marcela Revilla',tel:'+59176276677',lug:2,ok:false,bus:null}
-]
+])
 },
 
 'Domingo 30 de Agosto':{
 buses:busesDefault(),
-pasajeros:[
+pasajeros: conId('dom', [
 {name:'Jhonatan López Murillo',tel:'+59177244820',lug:4,ok:false,bus:null},
 {name:'Jucy Torrente',tel:'+59169190760',lug:1,ok:false,bus:null},
 {name:'Diego Aranda',tel:'+59176538358',lug:2,ok:false,bus:null},
@@ -83,7 +94,7 @@ pasajeros:[
 {name:'Leonel Herbas',tel:'+59177649163',lug:2,ok:false,bus:null},
 {name:'Cecilia Mendivil',tel:'+59172194667',lug:6,ok:false,bus:null},
 {name:'Maria Eugenia Gonzales',tel:'+59168927062',lug:3,ok:false,bus:null}
-]
+])
 }
 };
 
@@ -95,10 +106,13 @@ const VERSION_KEY = 'buses_teatro_selva_version';
 // conservando "ok" (abordó) y "bus" (bus asignado) de quien ya estaba marcado.
 function fusionarPasajeros(nuevos, viejos){
     let pool = [...viejos]; // pasajeros que ya estaban guardados, para ir "consumiendo" coincidencias
-    return nuevos.map(np=>{
-        // 1) intenta encontrar coincidencia exacta (nombre + teléfono + lugares)
-        let i = pool.findIndex(op=>op.name===np.name && op.tel===np.tel && op.lug===np.lug);
-        // 2) si no, intenta por nombre + teléfono nada más (por si le corrigieron los lugares)
+
+    let resultado = nuevos.map(np=>{
+        // 1) coincidencia por id (forma confiable, evita confundir nombres duplicados)
+        let i = pool.findIndex(op=>op.id && op.id===np.id);
+        // 2) si no tiene id (dato viejo migrando), intenta por nombre+teléfono+lugares
+        if(i===-1) i = pool.findIndex(op=>op.name===np.name && op.tel===np.tel && op.lug===np.lug);
+        // 3) o por nombre+teléfono nada más (por si le corrigieron los lugares)
         if(i===-1) i = pool.findIndex(op=>op.name===np.name && op.tel===np.tel);
         if(i!==-1){
             let match = pool.splice(i,1)[0];
@@ -107,6 +121,12 @@ function fusionarPasajeros(nuevos, viejos){
         // Pasajero nuevo que no estaba antes
         return { ...np, ok:false, bus:null };
     });
+
+    // Lo que queda en "pool" son pasajeros agregados a mano (botón "+") que no están
+    // en la lista base: los conservamos para no perderlos al actualizar versión.
+    resultado = resultado.concat(pool);
+
+    return resultado;
 }
 
 // ===== CARGAR DATOS =====
@@ -143,7 +163,7 @@ function cargarDatos(){
 
     // ¿Hay una versión de datos más nueva? Si es así, actualizamos las listas de pasajeros
     // (conservando quién ya abordó y en qué bus), pero respetamos la capacidad/estado de los
-    // buses que Diego ya haya configurado.
+    // buses que ya se haya configurado.
     const versionGuardada = parseInt(localStorage.getItem(VERSION_KEY) || '0');
     if(versionGuardada < DATA_VERSION){
         Object.keys(datosBase).forEach(v=>{
@@ -178,8 +198,11 @@ function guardarDatos(){
 const datos = cargarDatos();
 guardarDatos();
 
-const viaje=document.getElementById('viaje'),lista=document.getElementById('lista'),buscar=document.getElementById('buscar'),busesEl=document.getElementById('buses');
+const viaje=document.getElementById('viaje'),lista=document.getElementById('lista'),buscar=document.getElementById('buscar'),busesEl=document.getElementById('buses'),progresoEl=document.getElementById('progreso'),filtroInfoEl=document.getElementById('filtroInfo');
 Object.keys(datos).forEach(v=>viaje.add(new Option(v,v)));
+
+// Filtro de bus activo para el viaje mostrado: null = todos, número = ese bus, 'sinbus' = sin asignar
+let filtroBus = null;
 
 function draw(){
     let viajeData = datos[viaje.value];
@@ -191,39 +214,70 @@ function draw(){
     arr.forEach((p)=>{l+=p.lug;if(p.ok)a++;});
     reservas.textContent=r;lugares.textContent=l;abordo.textContent=a;faltan.textContent=r-a;
 
-    // ===== Dibujar los 3 buses con su ocupación, capacidad y estado =====
+    // ===== Barra de progreso visual =====
+    let porcentaje = r>0 ? Math.round((a/r)*100) : 0;
+    progresoEl.innerHTML=`
+<div class="progreso-track"><div class="progreso-fill" style="width:${porcentaje}%"></div></div>
+<div class="progreso-texto">${a}/${r} abordaron (${porcentaje}%)${r-a>0 ? ' · faltan '+(r-a) : ''}</div>`;
+
+    // ===== Dibujar los buses (clicables para filtrar) + chip "Sin bus" =====
+    let sinBusCant = pasajeros.filter(p=>p.bus===null || p.bus===undefined).length;
     let bh='';
     buses.forEach((b,i)=>{
         let ocupado = pasajeros.filter(p=>p.bus===i).reduce((s,p)=>s+p.lug,0);
         let sobre = ocupado>b.capacidad;
         bh+=`
-<div class="bus-chip ${b.lleno?'lleno':''} ${sobre?'sobre':''}">
+<div class="bus-chip ${b.lleno?'lleno':''} ${sobre?'sobre':''} ${filtroBus===i?'activo':''}" onclick="filtrarPorBus(${i})">
     <div class="bus-nombre">${b.nombre}</div>
     <div class="bus-ocupacion">${ocupado}/${b.capacidad}</div>
     <div class="bus-actions">
-        <button onclick="editarCapacidadBus(${i})" title="Editar capacidad">✏️</button>
-        <button onclick="toggleLleno(${i})" title="Marcar lleno/libre">${b.lleno?'🔴 Lleno':'🟢 Libre'}</button>
+        <button onclick="event.stopPropagation();editarCapacidadBus(${i})" title="Editar capacidad">✏️</button>
+        <button onclick="event.stopPropagation();toggleLleno(${i})" title="Marcar lleno/libre">${b.lleno?'🔴 Lleno':'🟢 Libre'}</button>
     </div>
 </div>`;
     });
+    bh+=`
+<div class="bus-chip sinbus-chip ${filtroBus==='sinbus'?'activo':''}" onclick="filtrarPorBus('sinbus')">
+    <div class="bus-nombre">Sin bus</div>
+    <div class="bus-ocupacion">${sinBusCant} pers.</div>
+</div>`;
     busesEl.innerHTML=bh;
 
+    // ===== Aviso de filtro activo =====
+    if(filtroBus===null){
+        filtroInfoEl.classList.add('oculto');
+        filtroInfoEl.innerHTML='';
+    }else{
+        let etiqueta = filtroBus==='sinbus' ? 'Sin bus asignado' : buses[filtroBus].nombre;
+        filtroInfoEl.classList.remove('oculto');
+        filtroInfoEl.innerHTML=`<span>Mostrando: ${etiqueta}</span><button onclick="filtrarPorBus(null)">✕ Quitar filtro</button>`;
+    }
+
+    // ===== Filtrar por búsqueda + filtro de bus =====
+    let visibles = arr.filter(p=>p.name.toLowerCase().includes(buscar.value.toLowerCase()));
+    if(filtroBus==='sinbus') visibles = visibles.filter(p=>p.bus===null || p.bus===undefined);
+    else if(filtroBus!==null) visibles = visibles.filter(p=>p.bus===filtroBus);
+
     // ===== Dibujar tarjetas de pasajeros =====
-    arr.filter(p=>p.name.toLowerCase().includes(buscar.value.toLowerCase())).forEach(p=>{
+    visibles.forEach(p=>{
         let idx=pasajeros.indexOf(p);
         let opciones = buses.map((b,i)=>`<option value="${i}" ${p.bus===i?'selected':''}>${b.nombre}${b.lleno?' (lleno)':''}</option>`).join('');
+        let telHtml = p.tel ? `<a class="tel-link" href="tel:${p.tel}">📞 ${p.tel}</a>` : '📞 -';
         h+=`
 <div class="card ${p.ok ? 'ok' : ''}">
     <div class="header-card">
         <div class="nombre">
             ${p.name}
         </div>
-        <button class="check" onclick="t(${idx})">
-            ${p.ok ? '✅' : '⬜'}
-        </button>
+        <div class="card-actions">
+            <button class="borrar" onclick="eliminarPasajero(${idx})" title="Eliminar pasajero">🗑️</button>
+            <button class="check" onclick="t(${idx})">
+                ${p.ok ? '✅' : '⬜'}
+            </button>
+        </div>
     </div>
     <div class="info">
-        📞 ${p.tel || '-'} &nbsp;&nbsp; • &nbsp;&nbsp;
+        ${telHtml} &nbsp;&nbsp; • &nbsp;&nbsp;
         🪑 ${p.lug} ${p.lug>1 ? 'lugares' : 'lugar'}
     </div>
     <div class="bus-row">
@@ -242,6 +296,17 @@ function t(i){
     datos[viaje.value].pasajeros[i].ok=!datos[viaje.value].pasajeros[i].ok;
     guardarDatos();
     draw();
+}
+
+function eliminarPasajero(i){
+    let viajeData = datos[viaje.value];
+    let p = viajeData.pasajeros[i];
+    if(!p) return;
+    if(confirm(`¿Eliminar a "${p.name}" de la lista? Esta acción no se puede deshacer.`)){
+        viajeData.pasajeros.splice(i,1);
+        guardarDatos();
+        draw();
+    }
 }
 
 function asignarBus(i, val){
@@ -275,20 +340,65 @@ function toggleLleno(i){
     draw();
 }
 
-viaje.onchange=draw;
+function filtrarPorBus(valor){
+    filtroBus = (filtroBus===valor) ? null : valor;
+    draw();
+}
+
+viaje.onchange=()=>{ filtroBus=null; draw(); };
 buscar.oninput=draw;
 viaje.selectedIndex=0;
 draw();
 
+// ===== Modal para agregar pasajero rápido =====
+const modalNuevo = document.getElementById('modalNuevo');
+const inputNombre = document.getElementById('inputNombre');
+const inputTelefono = document.getElementById('inputTelefono');
+const inputLugares = document.getElementById('inputLugares');
+const cancelarNuevo = document.getElementById('cancelarNuevo');
+const guardarNuevo = document.getElementById('guardarNuevo');
+
 nuevo.onclick=()=>{
-    let n=prompt('Nombre');
-    if(!n)return;
-    let tel=prompt('Teléfono')||'';
-    let lug=parseInt(prompt('Lugares','1'))||1;
-    datos[viaje.value].pasajeros.push({name:n,tel,lug,ok:false,bus:null});
+    inputNombre.value='';
+    inputTelefono.value='';
+    inputLugares.value=1;
+    modalNuevo.classList.remove('oculto');
+    inputNombre.focus();
+};
+
+cancelarNuevo.onclick=()=>{
+    modalNuevo.classList.add('oculto');
+};
+
+guardarNuevo.onclick=()=>{
+    let n = inputNombre.value.trim();
+    if(!n){
+        alert('Escribe un nombre.');
+        inputNombre.focus();
+        return;
+    }
+    let tel = inputTelefono.value.trim();
+    let lug = parseInt(inputLugares.value) || 1;
+    datos[viaje.value].pasajeros.push({
+        id: 'manual-' + Date.now(),
+        name: n, tel, lug, ok:false, bus:null
+    });
     guardarDatos();
+    modalNuevo.classList.add('oculto');
     draw();
-}
+};
+
+// Cerrar el modal si se toca fuera de la tarjeta
+modalNuevo.addEventListener('click', (e)=>{
+    if(e.target===modalNuevo) modalNuevo.classList.add('oculto');
+});
+
+// Enter en cualquier campo del modal = Guardar
+[inputNombre, inputTelefono, inputLugares].forEach(inp=>{
+    inp.addEventListener('keydown', (e)=>{
+        if(e.key==='Enter') guardarNuevo.click();
+    });
+});
 
 // Botón opcional para resetear todo a los datos originales (por si algún día lo necesitas
 // desde la consola del navegador: escribe resetearDatos() y Enter)
