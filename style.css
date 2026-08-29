@@ -8,6 +8,26 @@ header{background:#ff4d8d;padding:18px;display:flex;gap:15px;align-items:center}
 }
 .container{max-width:800px;margin:auto;padding:15px}
 select,input{width:100%;padding:12px;border-radius:12px;background:#1d1d1d;color:#fff;border:none;margin:10px 0}
+
+/* ===== Fila de los 3 buses ===== */
+.buses-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 0 12px}
+.bus-chip{background:#1d1d1d;border-radius:12px;padding:10px 6px;text-align:center;border:1px solid transparent}
+.bus-chip.lleno{background:#3a1414;border-color:#ff4d4d}
+.bus-chip.sobre .bus-ocupacion{color:#ff4d4d;font-weight:bold}
+.bus-nombre{color:#ff4d8d;font-weight:bold;font-size:13px}
+.bus-ocupacion{font-size:13px;color:#ddd;margin:4px 0}
+.bus-actions{display:flex;flex-direction:column;gap:4px}
+.bus-actions button{
+    background:none;
+    border:1px solid #444;
+    border-radius:8px;
+    color:#fff;
+    font-size:11px;
+    padding:4px 2px;
+    cursor:pointer;
+}
+.bus-chip.lleno .bus-actions button{border-color:#ff6b6b}
+
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
 .stats div{background:#1d1d1d;padding:10px;border-radius:12px;text-align:center}
 .stats span{display:block;color:#ff4d8d;font-size:22px;font-weight:bold}
@@ -30,8 +50,22 @@ select,input{width:100%;padding:12px;border-radius:12px;background:#1d1d1d;color
     margin:0;
     line-height:1;
 }
-
 .card.ok .check{
     color:#2eaf52;
 }
+
+/* ===== Selector de bus dentro de cada tarjeta ===== */
+.bus-row{margin-top:8px;display:flex;align-items:center;gap:6px;font-size:12px}
+.bus-row .bus-select{
+    width:auto;
+    flex:1;
+    padding:6px 8px;
+    border-radius:8px;
+    background:#111;
+    color:#fff;
+    border:1px solid #333;
+    margin:0;
+    font-size:12px;
+}
+
 #nuevo{position:fixed;right:18px;bottom:18px;width:58px;height:58px;border-radius:50%;border:none;background:#ff4d8d;color:#fff;font-size:28px}
