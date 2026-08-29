@@ -6,32 +6,58 @@
 <title>Buses Teatro de la Selva</title>
 <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
 <header>
-<div class="logo">
-    <img src="logo.png" alt="MGP">
-</div>
-<div><h1>BUSES TEATRO DE LA SELVA</h1><p>Control de Abordaje</p></div>
+    <div class="logo">
+        <img src="logo.png" alt="MGP">
+    </div>
+
+    <div>
+        <h1>BUSES TEATRO DE LA SELVA</h1>
+        <p>Control de Abordaje</p>
+    </div>
 </header>
 
 <div class="container">
-<label>Viaje</label>
-<select id="viaje"></select>
 
-<input id="buscar" placeholder="🔍 Buscar pasajero...">
+    <label>Viaje</label>
+    <select id="viaje"></select>
 
-<div class="stats">
-<div><span id="reservas">0</span><small>Reservas</small></div>
-<div><span id="lugares">0</span><small>Lugares</small></div>
-<div><span id="abordo">0</span><small>Abordó</small></div>
-<div><span id="faltan">0</span><small>Faltan</small></div>
-</div>
+    <div id="buses" class="buses-row"></div>
 
-<div id="lista"></div>
+    <input id="buscar" placeholder="🔍 Buscar pasajero...">
 
-<button id="nuevo">＋</button>
+    <div class="stats">
+        <div>
+            <span id="reservas">0</span>
+            <small>Reservas</small>
+        </div>
+
+        <div>
+            <span id="lugares">0</span>
+            <small>Lugares</small>
+        </div>
+
+        <div>
+            <span id="abordo">0</span>
+            <small>Abordó</small>
+        </div>
+
+        <div>
+            <span id="faltan">0</span>
+            <small>Faltan</small>
+        </div>
+    </div>
+
+    <div id="lista"></div>
+
+    <button id="nuevo">＋</button>
+
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
