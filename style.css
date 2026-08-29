@@ -8,22 +8,22 @@ header{background:#ff4d8d;padding:18px;display:flex;gap:15px;align-items:center}
 }
 .container{max-width:800px;margin:auto;padding:15px}
 select,input{width:100%;padding:12px;border-radius:12px;background:#1d1d1d;color:#fff;border:none;margin:10px 0}
-/* ===== Fila de buses (incluye chip "Sin bus") ===== */
-.buses-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(75px,1fr));gap:8px;margin:4px 0 12px}
-.bus-chip{background:#1d1d1d;border-radius:12px;padding:10px 6px;text-align:center;border:1px solid transparent;cursor:pointer;transition:box-shadow .15s}
+/* ===== Fila de buses (incluye chip "Sin bus") — compacta ===== */
+.buses-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(64px,1fr));gap:6px;margin:0 0 14px}
+.bus-chip{background:#1d1d1d;border-radius:10px;padding:6px 4px;text-align:center;border:1px solid transparent;cursor:pointer;transition:box-shadow .15s}
 .bus-chip.lleno{background:#3a1414;border-color:#ff4d4d}
 .bus-chip.sobre .bus-ocupacion{color:#ff4d4d;font-weight:bold}
 .bus-chip.activo{box-shadow:0 0 0 2px #ff4d8d inset}
-.bus-nombre{color:#ff4d8d;font-weight:bold;font-size:13px}
-.bus-ocupacion{font-size:13px;color:#ddd;margin:4px 0}
-.bus-actions{display:flex;flex-direction:column;gap:4px}
+.bus-nombre{color:#ff4d8d;font-weight:bold;font-size:10px}
+.bus-ocupacion{font-size:11px;color:#ddd;margin:2px 0}
+.bus-actions{display:flex;flex-direction:row;justify-content:center;gap:3px}
 .bus-actions button{
     background:none;
     border:1px solid #444;
-    border-radius:8px;
+    border-radius:6px;
     color:#fff;
-    font-size:11px;
-    padding:4px 2px;
+    font-size:9px;
+    padding:2px 3px;
     cursor:pointer;
 }
 .bus-chip.lleno .bus-actions button{border-color:#ff6b6b}
