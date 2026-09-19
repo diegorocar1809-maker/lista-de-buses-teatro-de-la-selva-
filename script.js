@@ -1,4 +1,4 @@
-const DATA_VERSION = 3;
+const DATA_VERSION = 4;
 
 function busesDefault(){
     return [
@@ -11,57 +11,37 @@ function busesDefault(){
 function conId(prefijo, arr){
     return arr.map((p,i)=>({...p, id:`${prefijo}-${i+1}`}));
 }
-
 const datosBase = {
-'Sábado 12 de Septiembre':{
+'Sábado 19 de Septiembre':{
 buses:busesDefault(),
-pasajeros: conId('sab', [
-{name:'ADELA GABRIEL',tel:'+59173158160',lug:1,ok:false,bus:null},
-{name:'Vanessa MANTILLA',tel:'+59179601709',lug:1,ok:false,bus:null},
-{name:'Glenda Dávalos Mejia',tel:'+59167596981',lug:2,ok:false,bus:null},
-{name:'David Fernando Chavez Villarroel',tel:'+59175324397',lug:2,ok:false,bus:null},
-{name:'Rosa Gonzales',tel:'+59165025941',lug:5,ok:false,bus:null},
-{name:'Ilsen Aviles',tel:'+59176114478',lug:2,ok:false,bus:null},
-{name:'Rosa Gonzales Mariscal',tel:'+59165025941',lug:1,ok:false,bus:null},
-{name:'Jorge Valda',tel:'+59176251117',lug:3,ok:false,bus:null},
-{name:'Alejandra Grájeda Gemio de Meneses',tel:'+59179776792',lug:2,ok:false,bus:null},
-{name:'Judith Castellon',tel:'+59172884812',lug:3,ok:false,bus:null},
-{name:'Jhomar Parada',tel:'+59177657797',lug:1,ok:false,bus:null},
-{name:'Juana Patricia Miranda',tel:'+59175055680',lug:3,ok:false,bus:null},
-{name:'heilen Torrez Peña',tel:'+59176695926',lug:2,ok:false,bus:null},
-{name:'Jhomar Parada macias',tel:'+59177657797',lug:1,ok:false,bus:null},
-{name:'Francis Molina Arrueta',tel:'+59164525956',lug:4,ok:false,bus:null},
-{name:'Lesly Sursi',tel:'+59163209770',lug:3,ok:false,bus:null},
-{name:'Nelsy Fabiola Mamani Ramos',tel:'+59178100532',lug:1,ok:false,bus:null},
-{name:'Dayana Ortega',tel:'+59168916261',lug:1,ok:false,bus:null},
-{name:'Aldy Bantin',tel:'+59175065816',lug:1,ok:false,bus:null},
-{name:'Mayra Zagal Bustamante',tel:'+59169002676',lug:2,ok:false,bus:null},
-{name:'Amet Del Rio',tel:'+59175338937',lug:2,ok:false,bus:null},
-{name:'Ingrid Alcey',tel:'+59173608613',lug:3,ok:false,bus:null},
-{name:'Judith Castellon',tel:'+59172884812',lug:1,ok:false,bus:null},
-{name:'Lia Beretta',tel:'+59173393770',lug:5,ok:false,bus:null}
+pasajeros: conId('sab19', [
+{name:'María José Solano Zabala',tel:'+59175559521',lug:2,ok:false,bus:null},
+{name:'Gary Flores',tel:'+59170865767',lug:2,ok:false,bus:null},
+{name:'Carla Coca',tel:'+59171615750',lug:1,ok:false,bus:null},
+{name:'Bruna Camacho',tel:'+59177053196',lug:2,ok:false,bus:null},
+{name:'Maria Lina Jaimez',tel:'+59167532676',lug:2,ok:false,bus:null},
+{name:'samadi hinojosa',tel:'+59176395607',lug:2,ok:false,bus:null},
+{name:'Candi Robles',tel:'+59172633648',lug:10,ok:false,bus:null},
+{name:'Candi Robles',tel:'+59172633648',lug:10,ok:false,bus:null},
+{name:'Victor luis López velasco',tel:'+59176854774',lug:2,ok:false,bus:null},
+{name:'Hernan Pacheco Mendoza',tel:'+59176027044',lug:2,ok:false,bus:null},
+{name:'Marizol ortega',tel:'+59174554126',lug:1,ok:false,bus:null},
+{name:'Laura Blacut',tel:'+59177116286',lug:1,ok:false,bus:null}
 ])
 },
-
-'Domingo 13 de Septiembre':{
+'Sábado 26 de Septiembre':{
 buses:busesDefault(),
-pasajeros: conId('dom', [
-{name:'Mary Yoselin Coyani Febrero',tel:'+59178784457',lug:1,ok:false,bus:null},
-{name:'Alejandro Inchauste',tel:'+59168833628',lug:2,ok:false,bus:null},
-{name:'Juana Hinojosa',tel:'+59172876509',lug:5,ok:false,bus:null},
-{name:'Haydey Rojo',tel:'+59175306269',lug:1,ok:false,bus:null},
-{name:'Luis Albino',tel:'+59179860108',lug:2,ok:false,bus:null},
-{name:'Olma Justiniano Arroyo',tel:'+59175587307',lug:2,ok:false,bus:null},
-{name:'Lorena Dávila',tel:'+59177645344',lug:2,ok:false,bus:null},
-{name:'Patricia Alvarez',tel:'+17274152011',lug:5,ok:false,bus:null},
-{name:'Javier Terrazas',tel:'+59176355305',lug:1,ok:false,bus:null},
-{name:'Juan Daniel Aruquipa Cruz',tel:'+59170904498',lug:2,ok:false,bus:null},
-{name:'Dana Montaño Peñaranda',tel:'+59171035297',lug:1,ok:false,bus:null},
-{name:'Yoshimi Ikehara',tel:'+59163588622',lug:1,ok:false,bus:null},
-{name:'Edward Limachi',tel:'+59178676716',lug:2,ok:false,bus:null},
-{name:'Jeffer Mansilla',tel:'+59168834281',lug:2,ok:false,bus:null},
-{name:'Williams Roberto Encinas Aranda',tel:'+59163373649',lug:2,ok:false,bus:null},
-{name:'Kristen Austin',tel:'+59176679188',lug:2,ok:false,bus:null}
+pasajeros: conId('sab26', [
+{name:'Rolando Romero',tel:'+59167895348',lug:4,ok:false,bus:null},
+{name:'Silvia Fabiola Cotjiri Daza',tel:'+59169793951',lug:2,ok:false,bus:null}
+])
+},
+'Domingo 27 de Septiembre':{
+buses:busesDefault(),
+pasajeros: conId('dom27', [
+{name:'Mariana Jorge',tel:'+59176351113',lug:2,ok:false,bus:null},
+{name:'Victoria Fernández',tel:'+59172472744',lug:2,ok:false,bus:null},
+{name:'Scherezada Costa',tel:'+59162313342',lug:2,ok:false,bus:null}
 ])
 },
 };
