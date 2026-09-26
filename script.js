@@ -1,4 +1,4 @@
-const DATA_VERSION = 5;
+const DATA_VERSION = 6;
 
 function busesDefault(){
     return [
@@ -12,23 +12,6 @@ function conId(prefijo, arr){
     return arr.map((p,i)=>({...p, id:`${prefijo}-${i+1}`}));
 }
 const datosBase = {
-'Sábado 19 de Septiembre':{
-buses:busesDefault(),
-pasajeros: conId('sab19', [
-{name:'María José Solano Zabala',tel:'+59175559521',lug:2,ok:false,bus:null},
-{name:'Gary Flores',tel:'+59170865767',lug:2,ok:false,bus:null},
-{name:'Carla Coca',tel:'+59171615750',lug:1,ok:false,bus:null},
-{name:'Bruna Camacho',tel:'+59177053196',lug:2,ok:false,bus:null},
-{name:'Maria Lina Jaimez',tel:'+59167532676',lug:2,ok:false,bus:null},
-{name:'samadi hinojosa',tel:'+59176395607',lug:2,ok:false,bus:null},
-{name:'Candi Robles',tel:'+59172633648',lug:10,ok:false,bus:null},
-{name:'Candi Robles',tel:'+59172633648',lug:10,ok:false,bus:null},
-{name:'Victor luis López velasco',tel:'+59176854774',lug:2,ok:false,bus:null},
-{name:'Hernan Pacheco Mendoza',tel:'+59176027044',lug:2,ok:false,bus:null},
-{name:'Marizol ortega',tel:'+59174554126',lug:1,ok:false,bus:null},
-{name:'Laura Blacut',tel:'+59177116286',lug:1,ok:false,bus:null}
-])
-},
 'Sábado 26 de Septiembre':{
 buses:busesDefault(),
 pasajeros: conId('sab26', [
@@ -71,7 +54,6 @@ pasajeros: conId('dom27', [
 ])
 },
 };
-
 const ICONS = {
     phone:`<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4c0 9 7 16 16 16 0-2 0-4-1-5-1-1-3-1-4 0l-1 1c-2-1-4-3-5-5l1-1c1-1 1-3 0-4-1-1-3-1-5-1z"/></svg>`,
     seat:`<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-4 3-6 7-6s7 2 7 6"/></svg>`,
