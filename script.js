@@ -1,4 +1,4 @@
-const DATA_VERSION = 4;
+const DATA_VERSION = 5;
 
 function busesDefault(){
     return [
@@ -33,7 +33,26 @@ pasajeros: conId('sab19', [
 buses:busesDefault(),
 pasajeros: conId('sab26', [
 {name:'Rolando Romero',tel:'+59167895348',lug:4,ok:false,bus:null},
-{name:'Silvia Fabiola Cotjiri Daza',tel:'+59169793951',lug:2,ok:false,bus:null}
+{name:'Silvia Fabiola Cotjiri Daza',tel:'+59169793951',lug:2,ok:false,bus:null},
+{name:'Juanali Urdininea Alvarez',tel:'+59175578536',lug:1,ok:false,bus:null},
+{name:'María Belén Avila',tel:'+59175116901',lug:2,ok:false,bus:null},
+{name:'Natalia Serrano Inarra',tel:'+59169755275',lug:1,ok:false,bus:null},
+{name:'Tesoro Natalia Chávez Vacaguzmán',tel:'+59173695742',lug:4,ok:false,bus:null},
+{name:'María Angélica Ramos',tel:'+59167865499',lug:2,ok:false,bus:null},
+{name:'Nadya Borja',tel:'+59178937545',lug:1,ok:false,bus:null},
+{name:'Aracely Villegas Felipez',tel:'+59171056942',lug:2,ok:false,bus:null},
+{name:'Claudia Rocio Sejas Avendaño',tel:'+59170110793',lug:1,ok:false,bus:null},
+{name:'Adriana Silva Siles',tel:'+59178097080',lug:1,ok:false,bus:null},
+{name:'Mirtha Balcazar',tel:'+59179886838',lug:3,ok:false,bus:null},
+{name:'Yackeline Escalante Roca',tel:'+59159169048835',lug:3,ok:false,bus:null},
+{name:'Jessica Verastegui',tel:'+59161511829',lug:2,ok:false,bus:null},
+{name:'Alisson Morón Alejandro',tel:'+59179833934',lug:3,ok:false,bus:null},
+{name:'Mauricio Barrios',tel:'+59175792727',lug:2,ok:false,bus:null},
+{name:'Sergio Antonio Sanchez Pedraza',tel:'+59169192055',lug:1,ok:false,bus:null},
+{name:'Nataly Nanda Huanca Patzi',tel:'+59174839997',lug:1,ok:false,bus:null},
+{name:'Susana Segovia',tel:'+59164539298',lug:2,ok:false,bus:null},
+{name:'Susana Segovia',tel:'+59164539298',lug:2,ok:false,bus:null},
+{name:'Samia Añez',tel:'+59178400178',lug:2,ok:false,bus:null}
 ])
 },
 'Domingo 27 de Septiembre':{
@@ -41,7 +60,14 @@ buses:busesDefault(),
 pasajeros: conId('dom27', [
 {name:'Mariana Jorge',tel:'+59176351113',lug:2,ok:false,bus:null},
 {name:'Victoria Fernández',tel:'+59172472744',lug:2,ok:false,bus:null},
-{name:'Scherezada Costa',tel:'+59162313342',lug:2,ok:false,bus:null}
+{name:'Scherezada Costa',tel:'+59162313342',lug:2,ok:false,bus:null},
+{name:'Brandy Montalban',tel:'+59168801048',lug:2,ok:false,bus:null},
+{name:'Daniela Perez',tel:'+59160352224',lug:2,ok:false,bus:null},
+{name:'Laura Avalos Zapata',tel:'+59177027729',lug:2,ok:false,bus:null},
+{name:'Stephanie Tapia',tel:'+59167058936',lug:2,ok:false,bus:null},
+{name:'Laida Paola Arredondo',tel:'+59165022330',lug:2,ok:false,bus:null},
+{name:'Gabriela Cordeiro de Oliveira',tel:'+591755257060',lug:2,ok:false,bus:null},
+{name:'Luz america Perez',tel:'+59167731884',lug:1,ok:false,bus:null}
 ])
 },
 };
