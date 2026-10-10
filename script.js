@@ -1,5 +1,5 @@
-const DATA_VERSION = 6;
-
+const DATA_VERSION = 7;
+ 
 function busesDefault(){
     return [
         {nombre:'Bus 1',capacidad:45,lleno:false},
@@ -7,50 +7,35 @@ function busesDefault(){
         {nombre:'Bus 3',capacidad:45,lleno:false}
     ];
 }
-
+ 
 function conId(prefijo, arr){
     return arr.map((p,i)=>({...p, id:`${prefijo}-${i+1}`}));
 }
 const datosBase = {
-'Sábado 26 de Septiembre':{
+'Sábado 10 de Octubre - Salsa Experience':{
 buses:busesDefault(),
-pasajeros: conId('sab26', [
-{name:'Rolando Romero',tel:'+59167895348',lug:4,ok:false,bus:null},
-{name:'Silvia Fabiola Cotjiri Daza',tel:'+59169793951',lug:2,ok:false,bus:null},
-{name:'Juanali Urdininea Alvarez',tel:'+59175578536',lug:1,ok:false,bus:null},
-{name:'María Belén Avila',tel:'+59175116901',lug:2,ok:false,bus:null},
-{name:'Natalia Serrano Inarra',tel:'+59169755275',lug:1,ok:false,bus:null},
-{name:'Tesoro Natalia Chávez Vacaguzmán',tel:'+59173695742',lug:4,ok:false,bus:null},
-{name:'María Angélica Ramos',tel:'+59167865499',lug:2,ok:false,bus:null},
-{name:'Nadya Borja',tel:'+59178937545',lug:1,ok:false,bus:null},
-{name:'Aracely Villegas Felipez',tel:'+59171056942',lug:2,ok:false,bus:null},
-{name:'Claudia Rocio Sejas Avendaño',tel:'+59170110793',lug:1,ok:false,bus:null},
-{name:'Adriana Silva Siles',tel:'+59178097080',lug:1,ok:false,bus:null},
-{name:'Mirtha Balcazar',tel:'+59179886838',lug:3,ok:false,bus:null},
-{name:'Yackeline Escalante Roca',tel:'+59159169048835',lug:3,ok:false,bus:null},
-{name:'Jessica Verastegui',tel:'+59161511829',lug:2,ok:false,bus:null},
-{name:'Alisson Morón Alejandro',tel:'+59179833934',lug:3,ok:false,bus:null},
-{name:'Mauricio Barrios',tel:'+59175792727',lug:2,ok:false,bus:null},
-{name:'Sergio Antonio Sanchez Pedraza',tel:'+59169192055',lug:1,ok:false,bus:null},
-{name:'Nataly Nanda Huanca Patzi',tel:'+59174839997',lug:1,ok:false,bus:null},
-{name:'Susana Segovia',tel:'+59164539298',lug:2,ok:false,bus:null},
-{name:'Susana Segovia',tel:'+59164539298',lug:2,ok:false,bus:null},
-{name:'Samia Añez',tel:'+59178400178',lug:2,ok:false,bus:null}
-])
-},
-'Domingo 27 de Septiembre':{
-buses:busesDefault(),
-pasajeros: conId('dom27', [
-{name:'Mariana Jorge',tel:'+59176351113',lug:2,ok:false,bus:null},
-{name:'Victoria Fernández',tel:'+59172472744',lug:2,ok:false,bus:null},
-{name:'Scherezada Costa',tel:'+59162313342',lug:2,ok:false,bus:null},
-{name:'Brandy Montalban',tel:'+59168801048',lug:2,ok:false,bus:null},
-{name:'Daniela Perez',tel:'+59160352224',lug:2,ok:false,bus:null},
-{name:'Laura Avalos Zapata',tel:'+59177027729',lug:2,ok:false,bus:null},
-{name:'Stephanie Tapia',tel:'+59167058936',lug:2,ok:false,bus:null},
-{name:'Laida Paola Arredondo',tel:'+59165022330',lug:2,ok:false,bus:null},
-{name:'Gabriela Cordeiro de Oliveira',tel:'+591755257060',lug:2,ok:false,bus:null},
-{name:'Luz america Perez',tel:'+59167731884',lug:1,ok:false,bus:null}
+pasajeros: conId('salsa10', [
+{name:'Giovanni Pérez Patton Zeballos',tel:'+59164518364',lug:1,ok:false,bus:null},
+{name:'Carlos Días fernndez',tel:'+59165526434',lug:2,ok:false,bus:null},
+{name:'Nathalia Lema',tel:'+59177390833',lug:2,ok:false,bus:null},
+{name:'Carla Carla Rodriguez',tel:'+59160900321',lug:2,ok:false,bus:null},
+{name:'Pablo Andres Salas Ibañez',tel:'+59178417831',lug:1,ok:false,bus:null},
+{name:'Robert Argote Wayer',tel:'+59162010703',lug:3,ok:false,bus:null},
+{name:'Bruno Cardozo Valenzuela',tel:'+59169172303',lug:1,ok:false,bus:null},
+{name:'María Fernanda Dorado',tel:'+59176699258',lug:3,ok:false,bus:null},
+{name:'FABIOLA PEREZ',tel:'+59176646747',lug:2,ok:false,bus:null},
+{name:'Erika Shriqui',tel:'+59177377391',lug:1,ok:false,bus:null},
+{name:'Selva Verania Vinacha Aldana',tel:'+59178021667',lug:1,ok:false,bus:null},
+{name:'Dayana Nuñez Dorado',tel:'+59167758599',lug:1,ok:false,bus:null},
+{name:'Jose Cabral Cespedes espedes',tel:'+59170486119',lug:1,ok:false,bus:null},
+{name:'Sandra Eliana García Claudio',tel:'+59170960292',lug:1,ok:false,bus:null},
+{name:'Mathilde Scheidegger',tel:'+59162300237',lug:1,ok:false,bus:null},
+{name:'Herland Rojas',tel:'+59178221888',lug:2,ok:false,bus:null},
+{name:'Alejandra Añez Doney',tel:'+59176699258',lug:1,ok:false,bus:null},
+{name:'Melisa Nazrala',tel:'+59177493404',lug:2,ok:false,bus:null},
+{name:'Oday Alhayek',tel:'+59169421346',lug:2,ok:false,bus:null},
+{name:'Fidel Laguna Terrazas',tel:'+59179472774',lug:1,ok:false,bus:null},
+{name:'Leidy Bustos',tel:'+59162405717',lug:1,ok:false,bus:null}
 ])
 },
 };
@@ -64,13 +49,13 @@ const ICONS = {
     checkOff:`<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/></svg>`,
     search:`<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>`
 };
-
+ 
 const STORAGE_KEY = 'buses_teatro_selva_datos';
 const VERSION_KEY = 'buses_teatro_selva_version';
-
+ 
 function fusionarPasajeros(nuevos, viejos){
     let pool = [...viejos];
-
+ 
     let resultado = nuevos.map(np=>{
         let i = pool.findIndex(op=>op.id && op.id===np.id);
         if(i===-1) i = pool.findIndex(op=>op.name===np.name && op.tel===np.tel && op.lug===np.lug);
@@ -81,12 +66,12 @@ function fusionarPasajeros(nuevos, viejos){
         }
         return { ...np, ok:false, bus:null };
     });
-
+ 
     resultado = resultado.concat(pool);
-
+ 
     return resultado;
 }
-
+ 
 function cargarDatos(){
     let d;
     try{
@@ -96,13 +81,13 @@ function cargarDatos(){
         console.error('Error leyendo localStorage:', e);
         d = null;
     }
-
+ 
     if(!d){
         d = JSON.parse(JSON.stringify(datosBase));
         localStorage.setItem(VERSION_KEY, DATA_VERSION);
         return d;
     }
-
+ 
     Object.keys(d).forEach(v=>{
         if(Array.isArray(d[v])){
             d[v] = { buses: busesDefault(), pasajeros: d[v] };
@@ -115,7 +100,7 @@ function cargarDatos(){
         if(!d[v].buses) d[v].buses = busesDefault();
         d[v].pasajeros.forEach(p=>{ if(p.bus===undefined) p.bus=null; });
     });
-
+ 
     const versionGuardada = parseInt(localStorage.getItem(VERSION_KEY) || '0');
     if(versionGuardada < DATA_VERSION){
         Object.keys(datosBase).forEach(v=>{
@@ -130,10 +115,10 @@ function cargarDatos(){
         });
         localStorage.setItem(VERSION_KEY, DATA_VERSION);
     }
-
+ 
     return d;
 }
-
+ 
 function guardarDatos(){
     try{
         localStorage.setItem(STORAGE_KEY, JSON.stringify(datos));
@@ -142,30 +127,30 @@ function guardarDatos(){
         alert('No se pudo guardar. Puede que el almacenamiento esté lleno o bloqueado.');
     }
 }
-
+ 
 const datos = cargarDatos();
 guardarDatos();
-
+ 
 const viaje=document.getElementById('viaje'),lista=document.getElementById('lista'),buscar=document.getElementById('buscar'),busesEl=document.getElementById('buses'),progresoEl=document.getElementById('progreso'),filtroInfoEl=document.getElementById('filtroInfo');
 Object.keys(datos).forEach(v=>viaje.add(new Option(v,v)));
-
+ 
 let filtroBus = null;
-
+ 
 function draw(){
     let viajeData = datos[viaje.value];
     let pasajeros = viajeData.pasajeros;
     let buses = viajeData.buses;
-
+ 
     let arr=[...pasajeros].sort((a,b)=>a.ok-b.ok);
     let h='',r=arr.length,l=0,a=0;
     arr.forEach((p)=>{l+=p.lug;if(p.ok)a++;});
     reservas.textContent=r;lugares.textContent=l;abordo.textContent=a;faltan.textContent=r-a;
-
+ 
     let porcentaje = r>0 ? Math.round((a/r)*100) : 0;
     progresoEl.innerHTML=`
 <div class="progreso-track"><div class="progreso-fill" style="width:${porcentaje}%"></div></div>
 <div class="progreso-texto">${a}/${r} abordaron (${porcentaje}%)${r-a>0 ? ' · faltan '+(r-a) : ''}</div>`;
-
+ 
     let sinBusCant = pasajeros.filter(p=>p.bus===null || p.bus===undefined).length;
     let bh='';
     buses.forEach((b,i)=>{
@@ -187,7 +172,7 @@ function draw(){
     <div class="bus-ocupacion">${sinBusCant} pers.</div>
 </div>`;
     busesEl.innerHTML=bh;
-
+ 
     if(filtroBus===null){
         filtroInfoEl.classList.add('oculto');
         filtroInfoEl.innerHTML='';
@@ -196,11 +181,11 @@ function draw(){
         filtroInfoEl.classList.remove('oculto');
         filtroInfoEl.innerHTML=`<span>Mostrando: ${etiqueta}</span><button onclick="filtrarPorBus(null)">✕ Quitar filtro</button>`;
     }
-
+ 
     let visibles = arr.filter(p=>p.name.toLowerCase().includes(buscar.value.toLowerCase()));
     if(filtroBus==='sinbus') visibles = visibles.filter(p=>p.bus===null || p.bus===undefined);
     else if(filtroBus!==null) visibles = visibles.filter(p=>p.bus===filtroBus);
-
+ 
     if(visibles.length===0){
         h=`
 <div class="estado-vacio">
@@ -242,13 +227,13 @@ function draw(){
     }
     lista.innerHTML=h;
 }
-
+ 
 function t(i){
     datos[viaje.value].pasajeros[i].ok=!datos[viaje.value].pasajeros[i].ok;
     guardarDatos();
     draw();
 }
-
+ 
 function eliminarPasajero(i){
     let viajeData = datos[viaje.value];
     let p = viajeData.pasajeros[i];
@@ -259,7 +244,7 @@ function eliminarPasajero(i){
         draw();
     }
 }
-
+ 
 function asignarBus(i, val){
     let viajeData = datos[viaje.value];
     let busIdx = val==='' ? null : parseInt(val);
@@ -273,7 +258,7 @@ function asignarBus(i, val){
     guardarDatos();
     draw();
 }
-
+ 
 function editarCapacidadBus(i){
     let viajeData = datos[viaje.value];
     let actual = viajeData.buses[i].capacidad;
@@ -283,31 +268,31 @@ function editarCapacidadBus(i){
     guardarDatos();
     draw();
 }
-
+ 
 function toggleLleno(i){
     let viajeData = datos[viaje.value];
     viajeData.buses[i].lleno = !viajeData.buses[i].lleno;
     guardarDatos();
     draw();
 }
-
+ 
 function filtrarPorBus(valor){
     filtroBus = (filtroBus===valor) ? null : valor;
     draw();
 }
-
+ 
 viaje.onchange=()=>{ filtroBus=null; draw(); };
 buscar.oninput=draw;
 viaje.selectedIndex=0;
 draw();
-
+ 
 const modalNuevo = document.getElementById('modalNuevo');
 const inputNombre = document.getElementById('inputNombre');
 const inputTelefono = document.getElementById('inputTelefono');
 const inputLugares = document.getElementById('inputLugares');
 const cancelarNuevo = document.getElementById('cancelarNuevo');
 const guardarNuevo = document.getElementById('guardarNuevo');
-
+ 
 nuevo.onclick=()=>{
     inputNombre.value='';
     inputTelefono.value='';
@@ -315,11 +300,11 @@ nuevo.onclick=()=>{
     modalNuevo.classList.remove('oculto');
     inputNombre.focus();
 };
-
+ 
 cancelarNuevo.onclick=()=>{
     modalNuevo.classList.add('oculto');
 };
-
+ 
 guardarNuevo.onclick=()=>{
     let n = inputNombre.value.trim();
     if(!n){
@@ -337,17 +322,17 @@ guardarNuevo.onclick=()=>{
     modalNuevo.classList.add('oculto');
     draw();
 };
-
+ 
 modalNuevo.addEventListener('click', (e)=>{
     if(e.target===modalNuevo) modalNuevo.classList.add('oculto');
 });
-
+ 
 [inputNombre, inputTelefono, inputLugares].forEach(inp=>{
     inp.addEventListener('keydown', (e)=>{
         if(e.key==='Enter') guardarNuevo.click();
     });
 });
-
+ 
 window.resetearDatos = function(){
     if(confirm('¿Seguro que quieres borrar todo lo guardado y volver a los datos originales?')){
         localStorage.removeItem(STORAGE_KEY);
