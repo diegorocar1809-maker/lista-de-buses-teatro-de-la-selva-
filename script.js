@@ -1,4 +1,4 @@
-const DATA_VERSION = 8;
+const DATA_VERSION = 9;
  
 function busesDefault(){
     return [
@@ -12,24 +12,33 @@ function conId(prefijo, arr){
     return arr.map((p,i)=>({...p, id:`${prefijo}-${i+1}`}));
 }
 const datosBase = {
-'Sábado 17 de Octubre - Circo Instante & Lontano':{
+'Sábado 24 de Octubre - Matrimonio Forzado 18:30':{
 buses:busesDefault(),
-pasajeros: conId('circo17', [
-{name:'Camila Rojas nuñez',tel:'+59176343253',lug:2,ok:false,bus:null},
-{name:'Claudia Sejas',tel:'+59170110793',lug:3,ok:false,bus:null},
-{name:'Noris Camacho',tel:'+59176050746',lug:2,ok:false,bus:null},
-{name:'Angel Gonzales',tel:'+59169267793',lug:2,ok:false,bus:null},
-{name:'Damaris Mariscal',tel:'+59178080797',lug:2,ok:false,bus:null},
-{name:'Mirna Veizaga',tel:'+59175353983',lug:3,ok:false,bus:null},
-{name:'Ada Marcela Guzmán Franco',tel:'+59173184779',lug:1,ok:false,bus:null},
-{name:'Claudia Sejas',tel:'+59170110793',lug:1,ok:false,bus:null},
-{name:'Angela Merlo',tel:'+59178107181',lug:2,ok:false,bus:null},
-{name:'Camila La Fuente',tel:'+59175432667',lug:2,ok:false,bus:null},
-{name:'Kamarilla VELA LOPEZ',tel:'+59168771585',lug:1,ok:false,bus:null},
-{name:'German Mercado',tel:'+59175371530',lug:2,ok:false,bus:null},
-{name:'Paola Rios',tel:'+59176076831',lug:1,ok:false,bus:null},
-{name:'Mary Paulazani',tel:'+59176666108',lug:3,ok:false,bus:null},
-{name:'Kristen Austin',tel:'+59176679188',lug:2,ok:false,bus:null}
+pasajeros: conId('matrimonio24', [
+{name:'Navil Castro',tel:'+59167723475',lug:2,ok:false,bus:null},
+{name:'Bella Millan',tel:'+59175825241',lug:4,ok:false,bus:null},
+{name:'Jose Federico Escobar Klose',tel:'+59179785060',lug:2,ok:false,bus:null},
+{name:'Ana Vanessa Gaspar Casablanca',tel:'+59172509891',lug:2,ok:false,bus:null},
+{name:'Víctor Rico',tel:'+59178953200',lug:2,ok:false,bus:null},
+{name:'Amiel Zeballos',tel:'+59177676703',lug:2,ok:false,bus:null},
+{name:'Valentina Ricalde Reyes',tel:'+59160840020',lug:2,ok:false,bus:null},
+{name:'Aldair Silva Perez',tel:'+59170446240',lug:2,ok:false,bus:null},
+{name:'Edward Andrade',tel:'+59175660823',lug:2,ok:false,bus:null},
+{name:'Angela Campos',tel:'+59178011841',lug:2,ok:false,bus:null},
+{name:'Verónica Porcel',tel:'+59178489561',lug:2,ok:false,bus:null},
+{name:'jose luis millan',tel:'+59162502262',lug:1,ok:false,bus:null},
+{name:'Anderson Medina Terán',tel:'+59160869809',lug:2,ok:false,bus:null},
+{name:'Maria Fernanda Gallardo chavez',tel:'+59171868293',lug:2,ok:false,bus:null},
+{name:'Gabriel Luizaga',tel:'+59169094178',lug:2,ok:false,bus:null},
+{name:'Guisela Rivero Rojas',tel:'+59160891742',lug:2,ok:false,bus:null},
+{name:'Gabriel Luizaga',tel:'+59169094178',lug:1,ok:false,bus:null},
+{name:'Mario Cuéllar',tel:'+59179909898',lug:2,ok:false,bus:null},
+{name:'Marco Nina',tel:'+14379814277',lug:2,ok:false,bus:null},
+{name:'Misael Guayao Bazán',tel:'+59169779406',lug:1,ok:false,bus:null},
+{name:'Fabiana Justiniano Banzer',tel:'+59168825595',lug:2,ok:false,bus:null},
+{name:'Jorge Mondaca',tel:'+59170615154',lug:2,ok:false,bus:null},
+{name:'Ignacio Fernholz',tel:'+59162380206',lug:2,ok:false,bus:null},
+{name:'Lineth Villanueva Guerra',tel:'+59173982989',lug:3,ok:false,bus:null}
 ])
 },
 };
