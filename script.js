@@ -1,4 +1,4 @@
-const DATA_VERSION = 9;
+const DATA_VERSION = 10;
  
 function busesDefault(){
     return [
@@ -39,6 +39,13 @@ pasajeros: conId('matrimonio24', [
 {name:'Jorge Mondaca',tel:'+59170615154',lug:2,ok:false,bus:null},
 {name:'Ignacio Fernholz',tel:'+59162380206',lug:2,ok:false,bus:null},
 {name:'Lineth Villanueva Guerra',tel:'+59173982989',lug:3,ok:false,bus:null}
+])
+},
+'Domingo 25 de Octubre - Matrimonio Forzado 18:30':{
+buses:busesDefault(),
+pasajeros: conId('matrimonio25', [
+{name:'Camila Payo Mendoza',tel:'+59169096601',lug:2,ok:false,bus:null},
+{name:'Henry Flores',tel:'+59178478891',lug:2,ok:false,bus:null}
 ])
 },
 };
