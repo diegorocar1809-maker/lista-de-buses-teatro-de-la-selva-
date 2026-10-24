@@ -153,13 +153,13 @@ function draw(){
  
     let arr=[...pasajeros].sort((a,b)=>a.ok-b.ok);
     let h='',r=arr.length,l=0,a=0;
-    arr.forEach((p)=>{l+=p.lug;if(p.ok)a++;});
-    reservas.textContent=r;lugares.textContent=l;abordo.textContent=a;faltan.textContent=r-a;
+    arr.forEach((p)=>{l+=p.lug;if(p.ok)a+=p.lug;});
+    reservas.textContent=r;lugares.textContent=l;abordo.textContent=a;faltan.textContent=l-a;
  
-    let porcentaje = r>0 ? Math.round((a/r)*100) : 0;
+    let porcentaje = l>0 ? Math.round((a/l)*100) : 0;
     progresoEl.innerHTML=`
 <div class="progreso-track"><div class="progreso-fill" style="width:${porcentaje}%"></div></div>
-<div class="progreso-texto">${a}/${r} abordaron (${porcentaje}%)${r-a>0 ? ' · faltan '+(r-a) : ''}</div>`;
+<div class="progreso-texto">${a}/${l} lugares abordaron (${porcentaje}%)${l-a>0 ? ' · faltan '+(l-a) : ''}</div>`;
  
     let sinBusCant = pasajeros.filter(p=>p.bus===null || p.bus===undefined).length;
     let bh='';
@@ -206,7 +206,7 @@ function draw(){
         visibles.forEach(p=>{
             let idx=pasajeros.indexOf(p);
             let opciones = buses.map((b,i)=>`<option value="${i}" ${p.bus===i?'selected':''}>${b.nombre}${b.lleno?' (lleno)':''}</option>`).join('');
-            let telHtml = p.tel ? `<a class="tel-link" href="tel:${p.tel}">${ICONS.phone}${p.tel}</a>` : `<span class="dato">${ICONS.phone}-</span>`;
+            let telHtml = p.tel ? `<a class="tel-link" href="https://wa.me/${p.tel.replace(/\D/g,'')}" target="_blank" rel="noopener">${ICONS.phone}${p.tel}</a>` : `<span class="dato">${ICONS.phone}-</span>`;
             h+=`
 <div class="card ${p.ok ? 'ok' : ''}">
     <div class="header-card">
